@@ -19,10 +19,9 @@ When in doubt, build less.
 - New behavior gets a test; don't test framework internals.
 
 ## Stack conventions live in the project
-Language-, framework-, and project-specific rules — how imports work, forms, state, data access,
-schema/migrations, folder layout — and project-phase policies (e.g. whether breaking changes are
-acceptable) are defined per project, in that repo's CLAUDE.md, rules, and skills. Follow those.
-This file stays tech-agnostic.
+Language-, framework-, and project-specific rules — how code is structured, styled, and organized —
+and project-phase policies (e.g. whether breaking changes are acceptable) are defined per project, in
+that repo's CLAUDE.md, rules, and skills. Follow those. This file stays tech-agnostic.
 
 ## Workflow
 - Every change gets reviewed before I see it: the qwe-critic challenges the design and trims it,

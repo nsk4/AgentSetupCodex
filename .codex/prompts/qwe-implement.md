@@ -12,7 +12,7 @@ Implement from the plan at: $ARGUMENTS
 2. **Hygiene pass — do this explicitly, it's the step that gets skipped.** Before any review, clean up your own diff:
    - **Docstrings** on every NEW public interface (exported/public module, class, function, endpoint, type) — document the contract and the *why*, not what the code says.
    - **Remove what shouldn't ship:** dead code, unused imports/exports, commented-out blocks, leftover debug prints/logging, and any TODO/FIXME you introduced.
-   - **Formatting:** make sure the formatters have actually run on every touched file (`.py` → `ruff format` then `ruff check --fix`; `.ts`/`.tsx` → `eslint --fix`). The save hook normally handles this, but confirm — don't assume it fired.
+   - **Formatting/lint:** make sure the project's formatter and linter have actually run on every touched file. The save hook normally handles this, but confirm — don't assume it fired.
    - **Consistency:** names, file placement, and patterns match the surrounding code.
    This is cleanup of what you just wrote — do not expand scope.
 
@@ -21,12 +21,12 @@ Implement from the plan at: $ARGUMENTS
    b. Apply the fixes that hold up.
    c. If you changed anything in (b), run qwe-critic AGAIN — a pass where you applied fixes is NEVER the last pass. Exit only on a clean confirming pass (qwe-critic comes back with nothing material), or after **3 passes**. Applying fixes is not the exit; a clean critic pass is.
 
-4. **qwe-reviewer** — use the **qwe-reviewer** subagent to review the diff for correctness AND to verify, against the plan, which increments were genuinely implemented vs. missing, partial, or blocked. Fix the real issues it finds; trust its verdict on what's actually done.
+4. **qwe-reviewer (full pre-PR gate)** — use the **qwe-reviewer** subagent for a FULL review of the diff: completeness (against the plan), correctness, security, regressions, consistency, documentation (incl. docstrings), and tests. Fix everything it flags; if its verdict is NOT READY, fix and re-run until it returns READY FOR PR, or after 2 reviewer passes. Its READY verdict is the bar — if it passes, the change is PR-ready.
 
-5. **Test** the affected areas — run the project's tests for what you touched (e.g. `pytest` for the affected backend domain, `npm test` for the frontend). Fix failures before reporting.
+5. **Test** the affected areas — run the project's test suite for what you touched. Fix failures before reporting.
 
 6. **Update + compact the plan** (per increment, based on the reviewer's verdict):
-   - Increment confirmed implemented, correct, and tested → mark it `- [x]` and **compact it**: collapse its sub-bullets into the checkbox line with a terse note of what landed (e.g. `- [x] Add CSV export — ReportApi.export() + button, removed XlsxButton`).
+   - Increment confirmed implemented, correct, and tested → mark it `- [x]` and **compact it**: collapse its sub-bullets into the checkbox line with a terse note of what landed (e.g. `- [x] Add rate limiting — limiter middleware + config, removed ad-hoc checks`).
    - Increment blocked, with an open question, or not implemented → leave it `- [ ]`, keep its detail **expanded**, and keep/add the `⚠ blocked:` / `⚠ open:` note so it's clear what remains and why.
    - Never delete increments or done notes.
    - Always leave the plan in `tmp/plans/` after this run — never archive or move it. Closing a finished plan is `/qwe-plan`'s job; here you only tick and compact it.
