@@ -19,7 +19,7 @@ Implement from the plan at: $ARGUMENTS
 3. **qwe-critic loop** — iterate until it settles or you hit the cap:
    a. Run the **qwe-critic** subagent in its OWN isolated context — it pulls the diff itself (`git diff` / `git diff --staged`), so don't replay the diff into this conversation; only its findings come back. It challenges the current diff on design and minimalism.
    b. Apply the fixes that hold up.
-   c. If you changed anything in (b), run qwe-critic AGAIN — a pass where you applied fixes is NEVER the last pass. Exit only on a clean confirming pass (qwe-critic comes back with nothing material), or after **3 passes**. Applying fixes is not the exit; a clean critic pass is.
+   c. If you changed anything in (b), run qwe-critic AGAIN — a pass where you applied fixes is NEVER the last pass. Exit only on a clean confirming pass (qwe-critic comes back with nothing material), or after **4 passes**. Applying fixes is not the exit; a clean critic pass is.
 
 4. **qwe-reviewer (full pre-PR gate)** — use the **qwe-reviewer** subagent for a FULL review of the diff: completeness (against the plan), correctness, security, regressions, consistency, documentation (incl. docstrings), and tests. Fix everything it flags; if its verdict is NOT READY, fix and re-run until it returns READY FOR PR, or after 2 reviewer passes. Its READY verdict is the bar — if it passes, the change is PR-ready.
 

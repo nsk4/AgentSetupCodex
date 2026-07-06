@@ -41,4 +41,5 @@ even when the same agent instructions are mirrored elsewhere in another format.
 - `/prompts:qwe-plan`
 - `/prompts:qwe-implement`
 - `/prompts:qwe-review`
+- `/prompts:qwe-review-branch`
 - `/prompts:qwe-commit-message`
