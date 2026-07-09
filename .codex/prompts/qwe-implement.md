@@ -25,19 +25,17 @@ Implement from the plan at: $ARGUMENTS
 
 5. **Test** the affected areas — run the project's test suite for what you touched. Fix failures before reporting.
 
-6. **Update + compact the plan** (per increment, based on the reviewer's verdict):
-   - Increment confirmed implemented, correct, and tested → mark it `- [x]` and **compact it**: collapse its sub-bullets into the checkbox line with a terse note of what landed (e.g. `- [x] Add rate limiting — limiter middleware + config, removed ad-hoc checks`).
-   - Increment blocked, with an open question, or not implemented → leave it `- [ ]`, keep its detail **expanded**, and keep/add the `⚠ blocked:` / `⚠ open:` note so it's clear what remains and why.
-   - Never delete increments or done notes.
-   - Always leave the plan in `tmp/plans/` after this run — never archive or move it. Closing a finished plan is `/qwe-plan`'s job; here you only tick and compact it.
+6. **Update the plan** (per increment, based on the reviewer's verdict) — keep it lean:
+   - Increment confirmed implemented, correct, and tested → REMOVE it from `## To do` and add ONE terse line under `## Done` (e.g. `- Add rate limiting — limiter middleware + config, removed ad-hoc checks`). Drop its sub-bullets.
+   - Increment blocked / open / not implemented → leave it under `## To do` with a `⚠ blocked:` / `⚠ open:` note.
+   - Never delete `## Done` entries; never archive or move the plan (that's `/qwe-plan`'s job). The point: `## To do` always shows only what's left, `## Done` is a compact one-line trace.
 
-7. **Report — brief:**
-   - Increments done (one line each) and files changed, including docs.
-   - Hygiene: docstrings added, formatters run, cleanup done.
-   - Anything left blocked/open, and why.
-   - qwe-critic loop: iterations to settle; tests: what ran and pass/fail.
-   - Decisions to sanity-check.
-   - If every increment is done: say so and tell me to run `/qwe-plan <plan>` to verify and archive it (you do not archive here).
+7. **Report — terse, status first. No essays, no narration.**
+   - **STATUS:** one of `DONE` (all increments landed) / `PARTIAL` / `NEEDS INPUT` / `BLOCKED`.
+   - **Done:** each completed increment, one short line.
+   - **Left / blocked:** what still needs doing and why — or `none`.
+   - **Sanity-check / out of scope:** anything I should eyeball, briefly — or `none`.
+   Nothing else — don't recount the critic loop or restate the diff. If STATUS is `DONE`, add one line: run `/qwe-plan <plan>` to verify and archive.
 
 8. **Do NOT commit and do NOT stage.** Run no `git add`, no `git commit`, no branch creation. Leave every change as an unstaged working-tree modification — I will stage and commit it myself. (Use `/qwe-commit-message` when you want a message.)
 
