@@ -12,7 +12,7 @@ Implement from the plan at: $ARGUMENTS
 2. **Hygiene pass — do this explicitly, it's the step that gets skipped.** Before any review, clean up your own diff:
    - **Docstrings** on every NEW public interface (exported/public module, class, function, endpoint, type) — document the contract and the *why*, not what the code says.
    - **Remove what shouldn't ship:** dead code, unused imports/exports, commented-out blocks, leftover debug prints/logging, and any TODO/FIXME you introduced.
-   - **Formatting/lint:** make sure the project's formatter and linter have actually run on every touched file. The save hook normally handles this, but confirm — don't assume it fired.
+   - **Formatting/lint:** the lines YOU changed should satisfy the project's formatter/linter (run the repo's formatter if it has one — e.g. via pre-commit). Do NOT reformat or normalize lines or files the task didn't change; if a formatter touches unrelated lines (quotes, whitespace, `Optional` <-> `| None`, etc.), revert those so the diff stays scoped to your change.
    - **Consistency:** names, file placement, and patterns match the surrounding code.
    This is cleanup of what you just wrote — do not expand scope.
 

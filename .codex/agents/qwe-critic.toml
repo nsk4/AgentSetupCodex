@@ -21,7 +21,7 @@ Flag every instance of:
 - A new pattern/util/abstraction where the codebase already has an established one -- use the existing one even if it looks suboptimal; consistency wins.
 - Comments or docstrings that restate what the code already says.
 - **Missing docstrings -- check this explicitly, every single run.** Enumerate every NEW public interface in the diff (exported/public module, class, function, method, endpoint, type) and flag each one that lacks a docstring documenting its contract and the *why*. This is the ONE place your removal bias does NOT apply -- never argue a docstring away; a missing one is always a finding.
-- Refactoring of adjacent code the task did not require.
+- Out-of-scope edits -- ANY reformatting, restyling, import reordering, or quote/whitespace/type-syntax normalization (e.g. `Optional[X]` <-> `X | None`) of lines the task didn't functionally change, in any file. Flag every one for reversion; untouched lines must stay byte-for-byte. "Consistency" means matching existing patterns in code you ADD -- never rewriting existing untouched code to normalize it.
 - Any violation of the project's loaded conventions (its stack/style/structure rules and skills).
 
 Output: a single prioritized list, highest-impact first. One line per item:

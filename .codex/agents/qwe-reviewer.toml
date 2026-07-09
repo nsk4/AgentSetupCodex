@@ -21,6 +21,7 @@ Check EVERY dimension, in priority order:
 6. **Documentation** -- every NEW public interface has a docstring (contract + why); docs the change makes stale (README, docs/*.md) are updated. A missing docstring on new public API is a blocking finding.
 7. **Tests** -- the new behavior's important paths are covered, and the tests actually exercise the change.
 8. **Leftovers** -- dead code, unused imports/exports, commented-out blocks, debug prints/logging, stray TODO/FIXME.
+9. **Scope** -- flag any file or line changed that the task didn't require: drive-by reformatting, restyling, import reordering, quote/whitespace/type-syntax normalization, or reverting a change that was requested. Untouched code must stay byte-for-byte; out-of-scope churn is a blocking finding.
 
 Output:
 - A one-line **verdict** first: `READY FOR PR` only when there are NO material issues in ANY dimension; otherwise `NOT READY`.

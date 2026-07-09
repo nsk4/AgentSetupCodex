@@ -9,7 +9,10 @@ When in doubt, build less.
   for the plainest solution that works.
 - One caller? Inline it. Don't add a layer until there are two real, differing uses.
 - No dead code, no unused imports/exports, no commented-out blocks, no "just in case" branches.
-- Smallest diff that fully solves the task. Don't refactor adjacent code unasked.
+- Smallest diff that fully solves the task. Change ONLY the lines the task requires; leave every other
+  line byte-for-byte, including in files you open for other reasons. Never reformat, restyle, reorder
+  imports, or normalize quotes / whitespace / type-syntax (e.g. `Optional[X]` <-> `X | None`) in code the
+  task didn't already change. No drive-by cleanups, ever.
 - Follow the rest of the codebase. Match its existing patterns, conventions, and folder
   layout before inventing anything new — even when a pattern looks suboptimal, consistency
   with the surrounding code wins. Deviate only when explicitly instructed.
@@ -28,3 +31,5 @@ that repo's CLAUDE.md, rules, and skills. Follow those. This file stays tech-agn
   then a general review checks for bugs, edge cases, and correctness.
 - Don't commit. Leave changes in the working tree for me to review and commit myself.
   Commit or create a branch only when I explicitly ask.
+- Never revert or undo a change I explicitly asked for. Scope discipline means not ADDING unrequested
+  changes — never removing requested ones.
