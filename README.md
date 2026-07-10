@@ -1,4 +1,4 @@
-# Codex Agent Setup
+# Agent Setup Codex
 
 Project-neutral Codex setup for the QWE agent workflow.
 

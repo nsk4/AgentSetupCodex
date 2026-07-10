@@ -1,4 +1,3 @@
-<!-- User-level base. Repo AGENTS.md, skills, and rules load after this and win on any conflict. -->
 # Global instructions
 
 Read `~/.codex/principles.md` before writing or reviewing code when it is available.
