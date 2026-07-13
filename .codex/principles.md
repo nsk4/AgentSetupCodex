@@ -18,13 +18,13 @@ When in doubt, build less.
   with the surrounding code wins. Deviate only when explicitly instructed.
 - Delete replaced code outright — no compat shims, no deprecation paths, no dual code paths kept "for safety".
 - Comments/docstrings explain *why* and document public interfaces. Never narrate *what* the code says.
-- Durable decisions live in the repo — code, docstrings, READMEs, skills, CLAUDE.md/rules — never only in auto-memory. Treat auto-memory as disposable local hints; the repo is the source of truth.
+- Durable decisions live in the repo — code, docstrings, READMEs, skills, AGENTS.md, and .codex assets — never only in auto-memory. Treat auto-memory as disposable local hints; the repo is the source of truth.
 - New behavior gets a test; don't test framework internals.
 
 ## Stack conventions live in the project
 Language-, framework-, and project-specific rules — how code is structured, styled, and organized —
 and project-phase policies (e.g. whether breaking changes are acceptable) are defined per project, in
-that repo's CLAUDE.md, rules, and skills. Follow those. This file stays tech-agnostic.
+that repo's AGENTS.md, .codex assets, and skills. Follow those. This file stays tech-agnostic.
 
 ## Workflow
 - Every change gets reviewed before I see it: the qwe-critic challenges the design and trims it,
