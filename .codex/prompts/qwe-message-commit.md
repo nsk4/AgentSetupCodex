@@ -15,11 +15,9 @@ Write ONE **brief** commit message — the shortest line that captures what chan
 - Start with a past-tense verb, sentence case: Added, Fixed, Implemented,
   Updated, Changed, Reworked, Extended, Renamed, Removed, Moved, Simplified.
 - No conventional-commit prefixes (no `feat:`/`fix:`/`chore:`), no scopes, no emoji.
-- Only when the commit genuinely bundles several DISTINCT changes, join them as comma clauses on one line — one terse clause per distinct change; never split a single change into multiple clauses.
 - No trailing period.
-- Length matches the change. A small or medium change is ONE short clause — do NOT pad it with detail that isn't needed to identify what changed. Only a genuinely large change spanning several distinct areas earns more (one terse clause per area). Summarize at a high level, never enumerate files. When in doubt, go shorter.
-- Append ticket refs when relevant: ", closes YNT-123". Infer the ticket from the branch
-  name (e.g. `git branch --show-current`) or the diff if one is clearly present; otherwise omit.
+- Length matches the change: a small/medium change is ONE short clause — never padded. Only a commit genuinely bundling several DISTINCT changes earns more, as comma clauses on one line (one terse clause per distinct change; never split a single change into several). Summarize at a high level, never enumerate files. When in doubt, go shorter.
+- Ticket refs (Linear): the identifier is like `YNT-123`, NOT `#123`. Source it from the plan's `## Tickets`, the branch name, or the diff. If this commit fully resolves the ticket, append the close keyword — `, closes YNT-123`; if it only advances it, reference without closing — `, refs YNT-123`. No ticket found → omit.
 - Do not add Co-Authored-By / "Generated with" trailers.
 
 Output just the message in a code block so I can copy it. Do NOT run `git commit`, `git add`,
