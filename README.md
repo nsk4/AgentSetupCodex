@@ -16,15 +16,23 @@ Codex home. Keep it technology-agnostic.
 
 ## Install
 
-Copy or sync this folder to your Codex home:
+On a local machine, clone the repository and run:
 
-```text
-.codex/AGENTS.md       -> ~/.codex/AGENTS.md
-.codex/principles.md   -> ~/.codex/principles.md
-.codex/agents/*.toml  -> ~/.codex/agents/
-.codex/prompts/*.md   -> ~/.codex/prompts/
-.codex/rules/*.md     -> ~/.codex/rules/
-.codex/templates/*.md -> ~/.codex/templates/
+```sh
+./install.sh
+```
+
+The installer copies `.codex/` into `${CODEX_HOME:-$HOME/.codex}` while
+preserving unrelated files already there. To use another location:
+
+```sh
+CODEX_HOME=/path/to/codex-home ./install.sh
+```
+
+In GitHub Codespaces, run this from the repository root:
+
+```sh
+bash install.sh
 ```
 
 Restart Codex after changing agents, prompts, or global instructions.
