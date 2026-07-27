@@ -3,7 +3,7 @@
 # Plan: <feature>
 
 ## Repos
-<the repos this plan spans (labels from my setup), e.g. `repo-a, repo-b`; write `None (single repo)` if it's just the current repo>
+<just the repo labels, e.g. `frontend, backend` — or `None` for the current repo only. No descriptions of what goes where (the increments' `[repo]` tags carry that); add a note ONLY when it genuinely matters, e.g. `backend (~90% of the work)` or a niche caveat>
 
 ## Tickets
 <ticket identifiers this plan addresses (e.g. Linear `YNT-123`); write `None` if none>

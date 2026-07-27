@@ -14,7 +14,7 @@ FIRST read `~/.codex/templates/plan.md`. Produce the plan in EXACTLY that struct
 Rules:
 - **Needs-your-input vs Assumptions is the whole point** — put something under "Needs your input" only if you truly can't default it; everything defaultable goes under "Assumptions."
 - Tag honestly, per the template's legend: `⛔ blocked` ONLY for a real hard blocker (something outside this step's control — input, a decision, the other side's output), naming exactly what unblocks it; never for work that merely needs care. Most items stay untagged (ready).
-- **Repo scope lives in the plan** — only when the work spans more than the current repo, fill `## Repos` and prefix each To-do item with its repo (`- [ ] [<repo>] …`); omit both for single-repo. Keeps the plan self-describing wherever it lives in the plans folder.
+- **Repo scope lives in the plan** — `## Repos` is BARE labels (`frontend, backend`), or `None` for single-repo; no prose about what belongs where — the increments' `[<repo>]` tags carry that. Annotate a label only when it genuinely matters (e.g. `backend (~90% of the work)`, a niche caveat). Multi-repo: prefix every To-do item with its owning repo.
 - Increments are ordered and each leaves the app working; prefer several small ones. Bias to the simplest, smallest design; reuse existing patterns and name them.
 - For each increment, name the closest existing code to MIRROR, and place the work in its owning service/module — never extend shared/core for one service's edge case unless a genuinely repeated pattern is being abstracted.
 - If it can't be read in 2 minutes, it's too big — cut it.
