@@ -1,6 +1,9 @@
 ---
+name: qwe-message-commit
 description: Generate a commit message for the currently staged changes, in my style. Prints the message in chat only — never commits.
 ---
+
+# QWE Commit Message
 
 Inspect the **staged** changes only:
 - `git diff --staged --stat` (which files changed)

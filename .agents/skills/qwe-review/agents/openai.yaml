@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Review"
+  short_description: "Review uncommitted or branch changes"
+  default_prompt: "Use $qwe-review to review the current uncommitted changes."
+
+policy:
+  allow_implicit_invocation: false

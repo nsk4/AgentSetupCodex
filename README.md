@@ -11,8 +11,8 @@ Codex home. Keep it technology-agnostic.
 - `principles.md` - editable design principles source.
 - `rules/*.md` - extensible user-specific context; `rules/setup.md` is the starter skeleton.
 - `agents/` - Codex custom agents.
-- `prompts/` - explicit slash-command workflows.
 - `templates/` - canonical plan and review-report formats.
+- `../.agents/skills/` - explicit-only QWE workflow skills.
 
 ## Install
 
@@ -22,11 +22,12 @@ On a local machine, clone the repository and run:
 ./install.sh
 ```
 
-The installer copies `.codex/` into `${CODEX_HOME:-$HOME/.codex}` while
-preserving unrelated files already there. To use another location:
+The installer copies `.codex/` into `${CODEX_HOME:-$HOME/.codex}` and
+`.agents/` into `${AGENTS_HOME:-$HOME/.agents}`, preserving unrelated files. To
+use other locations:
 
 ```sh
-CODEX_HOME=/path/to/codex-home ./install.sh
+CODEX_HOME=/path/to/codex-home AGENTS_HOME=/path/to/agents-home ./install.sh
 ```
 
 In GitHub Codespaces, run this from the repository root:
@@ -35,7 +36,7 @@ In GitHub Codespaces, run this from the repository root:
 bash install.sh
 ```
 
-Restart Codex after changing agents, prompts, or global instructions.
+Restart Codex if changed agents, skills, or global instructions do not appear automatically.
 
 Markdown files under `rules/` are loaded because `AGENTS.md` explicitly tells
 Codex to read them. Codex's executable permission rules use the separate
@@ -43,25 +44,25 @@ Codex to read them. Codex's executable permission rules use the separate
 
 ## Editing Rule
 
-Keep `prompts/` close to the source workflow, translating only paths,
-invocation syntax, and provider-specific capabilities that Codex cannot use.
-Codex currently marks custom prompts deprecated, but this payload retains them
-intentionally to preserve explicit command-style entrypoints.
+Keep workflow skills close to the source commands, translating only argument
+handling, paths, invocation syntax, and provider-specific capabilities that
+Codex cannot use. Every QWE skill is explicit-only through
+`allow_implicit_invocation: false`.
 
 `principles.md` is also intended to be drop-in replaceable.
 
 Agents must be TOML in Codex, so `agents/*.toml` use Codex's required format
 even when the same agent instructions are mirrored elsewhere in another format.
 
-## Prompt Commands
+## Workflow Skills
 
-- `/prompts:qwe-plan`
-- `/prompts:qwe-implement`
-- `/prompts:qwe-review`
-- `/prompts:qwe-feature`
-- `/prompts:qwe-worktree-add`
-- `/prompts:qwe-worktree-collapse`
-- `/prompts:qwe-survey`
-- `/prompts:qwe-message-commit`
-- `/prompts:qwe-message-pr`
-- `/prompts:qwe-linear`
+- `$qwe-plan`
+- `$qwe-implement`
+- `$qwe-review`
+- `$qwe-feature`
+- `$qwe-worktree-add`
+- `$qwe-worktree-collapse`
+- `$qwe-survey`
+- `$qwe-message-commit`
+- `$qwe-message-pr`
+- `$qwe-linear`

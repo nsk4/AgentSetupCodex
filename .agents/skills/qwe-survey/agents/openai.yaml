@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Survey"
+  short_description: "Survey code for simplification opportunities"
+  default_prompt: "Use $qwe-survey to survey this codebase area for simplification opportunities."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,9 +1,11 @@
 ---
+name: qwe-worktree-add
 description: Create a git worktree for a branch — reuse local/remote intelligently, else create off the base. Always fetches first; handles existing worktrees, occupied branches, and non-origin remotes; stops on conflicts. Never commits or pushes.
-argument-hint: <branch-name> [base-branch]
 ---
 
-Create an isolated worktree for a branch. From $ARGUMENTS take the branch name and an optional base branch.
+# QWE Worktree Add
+
+Create an isolated worktree for a branch. From the invoking request take the branch name and an optional base branch.
 
 **Remote** — don't assume `origin`: check `git remote`. One remote → use it (all `origin/...` below means that remote). Several → prefer `origin` if present, otherwise ask. None → skip remote steps and say so. **Always fetch first** when a remote exists, so you know the remote state.
 

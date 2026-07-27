@@ -1,13 +1,15 @@
 ---
-description: End-to-end feature — detect or create worktree(s), one canonical plan, per-increment implementation, full review with owned fix loop until READY FOR PR. Follows sibling prompt files so logic stays centralized. Leaves everything uncommitted. Never commits or pushes.
-argument-hint: [repo-labels] <@plan | description> [extra notes]
+name: qwe-feature
+description: End-to-end feature — detect or create worktree(s), one canonical plan, per-increment implementation, full review with owned fix loop until READY FOR PR. Follows sibling workflow skills so logic stays centralized. Leaves everything uncommitted. Never commits or pushes.
 ---
 
-Take a feature from a plan to reviewed, PR-ready (but UNCOMMITTED) worktree(s). Don't duplicate logic — **read each sibling prompt file and follow it** (`~/.codex/prompts/`), so later edits flow through here.
+# QWE Feature
+
+Take a feature from a plan to reviewed, PR-ready (but UNCOMMITTED) worktree(s). Don't duplicate logic — **read each sibling workflow skill named below and follow it**, so later edits flow through here.
 
 **Checklist:** maintain the session to-do list across the run — resolve repos → worktree(s) → plan → increments (qwe-implement's flow adds these) → review/fix loop → report. Update after every step.
 
-Interpret $ARGUMENTS: leading repo labels (the ones my setup rule defines) → scope; a feature IDENTIFIER if I give one (e.g. `xyz`) — used to FIND existing worktrees whose directory matches it (`<repo>-…-xyz`, e.g. `frontend-xyz`), and, if none exist, as the stem for new ones; `@plan` path or a description; remaining text = extra guidance. If I give no identifier or branch, derive it from the plan/feature (kebab-case).
+Interpret the invoking request: leading repo labels (the ones my setup rule defines) → scope; a feature IDENTIFIER if I give one (e.g. `xyz`) — used to FIND existing worktrees whose directory matches it (`<repo>-…-xyz`, e.g. `frontend-xyz`), and, if none exist, as the stem for new ones; a plan path or a description; remaining text = extra guidance. If I give no identifier or branch, derive it from the plan/feature (kebab-case).
 
 **Repo scope** — from the keywords if given, else the plan's `## Repos`. If neither names extra repos → current repo only. NEVER infer a second repo just because it's reachable. Multi-repo needs explicitly scoped access — a workspace containing only those repos, or the session's add-a-directory mechanism (e.g. `--add-dir`); if a named repo isn't reachable or identifiable (match each label to a reachable root via my setup's mapping, or by name/manifest — don't guess), STOP and ask. Order work by dependency: the repo the others depend on first.
 
@@ -15,15 +17,15 @@ Then:
 
 1. **Worktree(s) — detect or create.** Using the feature identifier, for each in-scope repo:
    - **Match existing worktrees by DIRECTORY name** via `git worktree list` — `xyz` matches `frontend-xyz`, `backend-xyz`, etc. For a match, use that worktree's ACTUAL branch and path (do NOT assume a `feature/<id>` branch). **Exists → REUSE it** and CONTINUE the work in progress there — a dirty worktree is expected; don't recreate it, and NEVER fall back to the repo's main checkout.
-   - **No match → create** via `/prompts:qwe-worktree-add` (branch = the one I named, else `feature/<identifier>`; it must be clean before implementing).
+   - **No match → create** by reading and following `../qwe-worktree-add/SKILL.md` (branch = the one I named, else `feature/<identifier>`; it must be clean before implementing).
    Record each repo's resolved worktree path. **Once a feature worktree exists (or was just created) for a repo, ALL that repo's work happens in that worktree path — never in its main checkout, even if the plan just says `frontend`/`backend`.**
 
-2. **One canonical plan** — exactly ONE plan file drives the whole feature, also for multi-repo (repo-tagged increments, one owning repo each, dependencies explicit). NEVER create per-repo copies or slices. If a plan for this feature already exists in the plans folder, USE it (don't recreate). Otherwise, if I gave a description, follow `qwe-plan.md` (new-plan case) to create it. Pass each worker the increment + context it needs from this one file.
+2. **One canonical plan** — exactly ONE plan file drives the whole feature, also for multi-repo (repo-tagged increments, one owning repo each, dependencies explicit). NEVER create per-repo copies or slices. If a plan for this feature already exists in the plans folder, USE it (don't recreate). Otherwise, if I gave a description, read and follow `../qwe-plan/SKILL.md` (new-plan case) to create it. Pass each worker the increment + context it needs from this one file.
 
-3. **Implement** — follow `qwe-implement.md` against the canonical plan (its per-increment implementer/critic loop, checklist, and plan updates). Each increment is implemented IN ITS OWNING REPO'S WORKTREE — the path recorded in step 1, never the repo's main checkout. Pass every qwe-implementer (and critic) the specific worktree path to work in; do NOT touch the main working directories.
+3. **Implement** — read and follow `../qwe-implement/SKILL.md` against the canonical plan (its per-increment implementer/critic loop, checklist, and plan updates). Each increment is implemented IN ITS OWNING REPO'S WORKTREE — the path recorded in step 1, never the repo's main checkout. Pass every qwe-implementer (and critic) the specific worktree path to work in; do NOT touch the main working directories.
 
 4. **Review + fix loop (you own the fixes):**
-   a. Follow `qwe-review.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes).
+   a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes).
    b. Evaluate the findings: accept what holds up, reject with reason.
    c. Accepted fixes → hand as an explicit fix list to a fresh **qwe-implementer** (its own context).
    d. Re-run the review. Stop when it returns `READY FOR PR`, or after **2 full review/fix passes** — then report what's still open.

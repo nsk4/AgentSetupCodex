@@ -26,7 +26,7 @@
 - [ ] <increment> ✎ polish
 
 ## Done
-- [x] <completed increment — one terse line, filled by /prompts:qwe-implement>
+- [x] <completed increment — one terse line, filled by $qwe-implement>
 
 ## Out of scope
 - <what is deliberately NOT being done>

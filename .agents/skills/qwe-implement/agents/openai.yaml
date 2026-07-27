@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Implement"
+  short_description: "Implement a QWE plan with critic loops"
+  default_prompt: "Use $qwe-implement to implement the remaining increments in a QWE plan."
+
+policy:
+  allow_implicit_invocation: false

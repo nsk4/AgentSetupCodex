@@ -39,7 +39,7 @@ that repo's own instructions, rules, and skills. Follow those. This file stays t
 
 ## Workflow
 - Every implemented change is challenged by the qwe-critic (design + minimalism) as it's built;
-  the full qwe-reviewer gate runs on demand (/prompts:qwe-review) or before a PR (/prompts:qwe-feature).
+  the full qwe-reviewer gate runs on demand ($qwe-review) or before a PR ($qwe-feature).
 - Git roles (see Hard rule 1): editing agents run no git; review agents inspect read-only; the
   working tree is left for me. Never `git add` even to "reconcile" an already-staged file — the
   staged/unstaged split is mine. Correct mistakes through normal file edits, never git operations.

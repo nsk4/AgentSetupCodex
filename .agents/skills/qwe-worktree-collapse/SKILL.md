@@ -1,9 +1,11 @@
 ---
-description: Reverse of /prompts:qwe-worktree-add — collapse a feature's worktree(s) back into their main checkout(s): bring each branch (and any uncommitted work, as staged changes) into its main repo, then remove the worktree. Collapses ALL of the feature's worktrees by default; one only if you restrict it. Leaves work staged, not committed.
-argument-hint: <feature identifier | worktree path> [repo-label]
+name: qwe-worktree-collapse
+description: "Reverse of `$qwe-worktree-add` — collapse a feature's worktree(s) back into their main checkout(s): bring each branch (and any uncommitted work, as staged changes) into its main repo, then remove the worktree. Collapses ALL of the feature's worktrees by default; one only if you restrict it. Leaves work staged, not committed."
 ---
 
-Collapse worktree(s) for $ARGUMENTS back into their main checkout(s). Deliberate, scoped exception to the no-commit / no-reset rule: it may use ONE transient commit PER worktree purely to transport uncommitted work, and must undo it so no commit I didn't ask for survives.
+# QWE Worktree Collapse
+
+Collapse the worktree(s) named in the invoking request back into their main checkout(s). Deliberate, scoped exception to the no-commit / no-reset rule: it may use ONE transient commit PER worktree purely to transport uncommitted work, and must undo it so no commit I didn't ask for survives.
 
 **Which worktrees to collapse:**
 - A **feature identifier** (e.g. `xyz`) → find EVERY worktree matching it by directory name (`<repo>-…-xyz`, e.g. `frontend-xyz`, `backend-xyz`) across ALL reachable repos in this session (`git worktree list` in each), and collapse EACH — this is the default. Do NOT stop at the current/top repo.

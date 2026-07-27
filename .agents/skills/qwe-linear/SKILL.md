@@ -1,9 +1,11 @@
 ---
+name: qwe-linear
 description: Create a Linear ticket from the passed content, at the right altitude — high-level for a feature, detailed only for genuinely low-level items. Requires a connected Linear MCP.
-argument-hint: <what the ticket is about>
 ---
 
-Create a Linear issue for: $ARGUMENTS
+# QWE Linear
+
+Create a Linear issue for the invoking request.
 
 This needs a **Linear MCP** connected (the issue is created through it). If none is connected, say so and stop.
 

@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Feature"
+  short_description: "Run the complete QWE feature workflow"
+  default_prompt: "Use $qwe-feature to take a feature through planning, implementation, and review."
+
+policy:
+  allow_implicit_invocation: false

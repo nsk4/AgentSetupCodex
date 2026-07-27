@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE PR Message"
+  short_description: "Draft a pull request description"
+  default_prompt: "Use $qwe-message-pr to draft a pull request description for the current branch."
+
+policy:
+  allow_implicit_invocation: false

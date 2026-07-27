@@ -18,5 +18,5 @@ Output a table, highest value-to-effort first:
 | # | Opportunity | Where (files) | Suggested change | Value | Effort/Risk |
 |---|-------------|---------------|------------------|:-----:|:-----------:|
 
-For each: name the concrete locations, the specific consolidation/simplification, and be honest about value vs effort/risk. Flag only real, evidence-backed opportunities — if the code is already consistent and lean for its scope, say so in one line. You do not edit — you report. Anything worth doing becomes a plan via `/prompts:qwe-plan`.
+For each: name the concrete locations, the specific consolidation/simplification, and be honest about value vs effort/risk. Flag only real, evidence-backed opportunities — if the code is already consistent and lean for its scope, say so in one line. You do not edit — you report. Anything worth doing becomes a plan via `$qwe-plan`.
 """

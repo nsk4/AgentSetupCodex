@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Worktree Collapse"
+  short_description: "Collapse feature worktrees into main checkouts"
+  default_prompt: "Use $qwe-worktree-collapse to collapse this feature worktree into its main checkout."
+
+policy:
+  allow_implicit_invocation: false

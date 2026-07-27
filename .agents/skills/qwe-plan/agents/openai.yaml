@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Plan"
+  short_description: "Create or manage a canonical QWE plan"
+  default_prompt: "Use $qwe-plan to create or manage a canonical implementation plan."
+
+policy:
+  allow_implicit_invocation: false
