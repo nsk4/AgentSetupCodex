@@ -23,6 +23,7 @@ Then:
 2. **One canonical plan** — exactly ONE plan file drives the whole feature, also for multi-repo (repo-tagged increments, one owning repo each, dependencies explicit). NEVER create per-repo copies or slices. If a plan for this feature already exists in the plans folder, USE it (don't recreate). Otherwise, if I gave a description, read and follow `../qwe-plan/SKILL.md` (new-plan case) to create it. Pass each worker the increment + context it needs from this one file.
 
 3. **Implement** — read and follow `../qwe-implement/SKILL.md` against the canonical plan (its per-increment implementer/critic loop, checklist, and plan updates). Each increment is implemented IN ITS OWNING REPO'S WORKTREE — the path recorded in step 1, never the repo's main checkout. Pass every qwe-implementer (and critic) the specific worktree path to work in; do NOT touch the main working directories.
+   **Every in-scope repo is implemented in THIS run — never do one repo and hand me a prompt for the other; handoff prompts are only for repos outside this run's scope.** Work dependency-first, and when an increment was `⛔ blocked` on the other side's output and that output has now landed in this run, UNBLOCK it and implement it now — only increments still blocked on something external (my input, a real outside dependency) remain tagged.
 
 4. **Review + fix loop (you own the fixes):**
    a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes).

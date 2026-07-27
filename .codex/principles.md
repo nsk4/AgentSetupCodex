@@ -43,6 +43,6 @@ that repo's own instructions, rules, and skills. Follow those. This file stays t
 - Git roles (see Hard rule 1): editing agents run no git; review agents inspect read-only; the
   working tree is left for me. Never `git add` even to "reconcile" an already-staged file — the
   staged/unstaged split is mine. Correct mistakes through normal file edits, never git operations.
-- A prompt meant for another agent or repo (a cross-repo handoff) goes in chat as a Markdown block — never written into a plan, doc, or code file.
+- A handoff prompt for a repo/agent OUTSIDE the current run's scope goes in chat as a Markdown block — never written into a plan, doc, or code file. Never hand off work for a repo that IS in scope — implement it.
 - Any plan you write follows `~/.codex/templates/plan.md`, whatever its source (feature request, ticket, or review findings) — fill the template, don't freeform.
-- When relaying critic/reviewer findings to a fixer, the orchestrating prompt decides what to apply: reject any finding that would merely reverse a deliberate simplification or undo a requested/legitimate change. If the critic and reviewer conflict (one wants something removed, the other kept or added), STOP and flag it — never ping-pong fixes back and forth.
+- When relaying critic/reviewer findings to a fixer, the orchestrating skill decides what to apply: reject any finding that would merely reverse a deliberate simplification or undo a requested/legitimate change. If the critic and reviewer conflict (one wants something removed, the other kept or added), STOP and flag it — never ping-pong fixes back and forth.
