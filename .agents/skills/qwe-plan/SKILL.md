@@ -26,4 +26,4 @@ Work out which case applies from the invoking request:
 
 **Tickets:** if the input is or references Linear ticket(s) — a ticket ID/URL, or I mention one — record the identifier(s) in the plan's `## Tickets` (e.g. `YNT-123`) so `$qwe-implement` and `$qwe-message-commit` can reference/close them.
 
-In all cases: show me the result and print its path, then stop. Never write implementation code — that's what `$qwe-implement` is for.
+In all cases: show me the result and print its path. If `## Needs your input` is non-empty, ASK me those questions NOW — numbered, with the planner's recommended default for each. Fold each answer into the plan (into the increments and/or `## Assumptions`) and REMOVE the resolved item, so `## Needs your input` ends at `None`. A finished qwe-plan run leaves NO open questions — the only way one remains is if I explicitly didn't answer it. Then stop. Never write implementation code — that's what `$qwe-implement` is for.

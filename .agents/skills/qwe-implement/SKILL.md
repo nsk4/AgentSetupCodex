@@ -23,7 +23,7 @@ Implement from the plan named in the invoking request.
    c. Evaluate its findings HERE: accept what holds up, reject with reason what doesn't.
    d. Accepted findings → hand as an explicit fix list to a FRESH **qwe-implementer** invocation.
    e. Repeat b–d until the critic returns clean, or after at most **3 critic/fix cycles**.
-   f. A genuinely blocked increment: tag it `⛔ blocked: <reason>` in the plan and move on — never stall the run.
+   f. A genuinely blocked increment: tag it `⛔ blocked: <reason>` in the plan and move on — never stall the run. Don't stop mid-run to ask me questions: take the safest default and record it under `## Assumptions`, or tag `⛔ blocked` — questions belong in the final report (STATUS `NEEDS INPUT`).
 
 3. **Update the plan** (canonical file — never a copy): move each finished increment from `## To do` to `## Done` as `- [x] <increment — terse note>`, dropping its sub-bullets. Blocked ones stay under `## To do` tagged. Never delete Done entries; never archive/move the plan (that's `$qwe-plan`'s job).
 

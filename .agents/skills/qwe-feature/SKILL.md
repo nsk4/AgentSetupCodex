@@ -23,15 +23,17 @@ Then:
 
 2. **One canonical plan** — exactly ONE plan file drives the whole feature, also for multi-repo (repo-tagged increments, one owning repo each, dependencies explicit). NEVER create per-repo copies or slices. If a plan for this feature already exists in the plans folder, USE it (don't recreate). Otherwise, if I gave a description, read and follow `../qwe-plan/SKILL.md` (new-plan case) to create it. Pass each worker the increment + context it needs from this one file.
 
-3. **Implement** — read and follow `../qwe-implement/SKILL.md` against the canonical plan (its per-increment implementer/critic loop, checklist, and plan updates). Each increment is implemented IN ITS OWNING REPO'S WORKTREE — the path recorded in step 1, never the repo's main checkout. Pass every qwe-implementer (and critic) the specific worktree path to work in; do NOT touch the main working directories.
+3. **Clarification gate — normally a no-op.** All questions belong to the planner, so expect `## Needs your input: None`; if so, proceed without asking me ANYTHING. Only if unanswered items remain (I didn't answer them at plan time) ask them ONCE, in one numbered batch with recommended defaults, fold the answers in, and set the section to `None`. From here on the run is non-interactive: anything that surfaces mid-run takes the safest default (recorded under `## Assumptions`) or a `⛔ blocked` tag — surfaced in the FINAL report, never as a mid-run stop. Stop mid-run only for a true showstopper (continuing would destroy work or contradict an explicit instruction).
+
+4. **Implement** — read and follow `../qwe-implement/SKILL.md` against the canonical plan (its per-increment implementer/critic loop, checklist, and plan updates). Each increment is implemented IN ITS OWNING REPO'S WORKTREE — the path recorded in step 1, never the repo's main checkout. Pass every qwe-implementer (and critic) the specific worktree path to work in; do NOT touch the main working directories.
    **Every in-scope repo is implemented in THIS run — never do one repo and hand me a prompt for the other; handoff prompts are only for repos outside this run's scope.** Work dependency-first, and when an increment was `⛔ blocked` on the other side's output and that output has now landed in this run, UNBLOCK it and implement it now — only increments still blocked on something external (my input, a real outside dependency) remain tagged.
 
-4. **Review + fix loop (you own the fixes):**
+5. **Review + fix loop (you own the fixes):**
    a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes).
    b. Evaluate the findings: accept what holds up, reject with reason.
    c. Accepted fixes → hand as an explicit fix list to a fresh **qwe-implementer** (its own context).
    d. Re-run the review. Stop when it returns `READY FOR PR`, or after **2 full review/fix passes** — then report what's still open.
 
-5. **Git safety** — everything stays UNCOMMITTED: no staging, commits, push, or destructive git operations (`git reset`/`restore`/`checkout --`/`clean`/`stash`/`revert`). I review and commit myself.
+6. **Git safety** — everything stays UNCOMMITTED: no staging, commits, push, or destructive git operations (`git reset`/`restore`/`checkout --`/`clean`/`stash`/`revert`). I review and commit myself.
 
 **Report — terse, per repo:** worktree folder + branch, implement STATUS, final review verdict, anything blocked/open (incl. cross-side blockers). Point me at each worktree to review and commit.
