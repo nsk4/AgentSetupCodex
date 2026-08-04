@@ -3,6 +3,7 @@
 
 Read `~/.codex/principles.md` before writing or reviewing code.
 Read every Markdown file under `~/.codex/rules/`. These files contain user-specific repository, environment, and workflow context.
+When a rule file declares that it applies only to particular repository or worktree paths, ignore that file unless the current path matches.
 
 ## Response style
 - Be concise and direct. Lead with the answer, result, or recommendation.

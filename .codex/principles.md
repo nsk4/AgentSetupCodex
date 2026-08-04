@@ -5,7 +5,7 @@ When in doubt, build less.
 
 ## Hard rules — never break these
 1. **No git writes**: never stage (`git add`), commit, or push; never `reset`/`restore`/`checkout --`/`clean`/`stash`/`revert`; no checkpoint commits. Staging and committing are only ever mine. (Editing agents run no git at all.)
-2. **Byte-for-byte scope**: change only the lines the task requires; no reformatting or normalizing untouched code; never revert a change I asked for.
+2. **Byte-for-byte scope**: change only what the task requires; no reformatting or normalizing untouched code; never revert a change I asked for. This covers FUNCTIONAL overreach too: no fixing unrelated bugs you notice, no reworking related-but-not-the-point code, no improvements beyond the ask. Anything worth doing that isn't the task is a NOTE in your report (a finding / follow-up), never an edit.
 3. **Docstrings by enumeration**: every NEW public interface gets one — list them and check each off; "most" is a failure.
 4. **Plans are the template**: anything called a plan is `~/.codex/templates/plan.md` filled in, all sections present.
 
@@ -29,7 +29,7 @@ When in doubt, build less.
   one-line docstring; say what it does for its caller and *why*, at THIS layer's abstraction. Never
   narrate *what* the code does; document an edge case once, at the layer that handles it — never
   echoed up into higher-level docstrings. Same restraint for comments. No ticket/issue IDs in code.
-- Durable decisions live in the repo — code, docstrings, READMEs, rules, skills — never only in the assistant's own memory. Treat assistant memory as disposable local hints; the repo is the source of truth.
+- Memory writes are EXPLICIT-ONLY: never save anything to memory (auto-memory or any other persistent store) on your own initiative — only when I explicitly ask you to remember something. Durable decisions live in the repo — code, docstrings, READMEs, rules, skills — never only in assistant memory; treat memory as disposable local hints, the repo is the source of truth.
 - New behavior gets a test; don't test framework internals.
 
 ## Stack conventions live in the project

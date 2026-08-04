@@ -39,8 +39,10 @@ bash install.sh
 Restart Codex if changed agents, skills, or global instructions do not appear automatically.
 
 Markdown files under `rules/` are loaded because `AGENTS.md` explicitly tells
-Codex to read them. Codex's executable permission rules use the separate
-`*.rules` format in the same configuration namespace.
+Codex to read them. Project-specific files declare their own applicability and
+are ignored outside matching repository or worktree paths. Codex's executable
+permission rules use the separate `*.rules` format in the same configuration
+namespace.
 
 ## Editing Rule
 
@@ -66,3 +68,4 @@ even when the same agent instructions are mirrored elsewhere in another format.
 - `$qwe-message-commit`
 - `$qwe-message-pr`
 - `$qwe-linear`
+- `$qwe-rule`

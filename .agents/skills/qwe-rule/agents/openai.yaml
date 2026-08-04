@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Rule"
+  short_description: "Capture a persistent personal rule"
+  default_prompt: "Use $qwe-rule to capture this correction or preference as a persistent rule."
+
+policy:
+  allow_implicit_invocation: false
