@@ -11,7 +11,7 @@ Implement from the plan named in the invoking request.
 
 **Mode** — default: ALL remaining unchecked increments this run. `step` (or `one`/`next`) in the invoking request: only the next one.
 
-**Entry — existing working state.** A clean checkout is NOT required. First inspect `git status --short` and the diff: changes related to the active plan or this conversation are valid working state — continue from them. Preserve unrelated changes byte-for-byte and keep new work away from them; don't stop merely because the tree is dirty. Stop and ask ONLY if unrelated changes overlap the requested work enough that continuing risks overwriting or misattributing them.
+**Entry — existing working state.** If this run CONTINUES an interrupted one: find your position from the checklist's in-progress item and the plan's `## To do`/`## Done`, then redo the interrupted step — re-spawn any agent whose result never came back (partial edits on disk are valid state for the fresh spawn to continue from); don't redo confirmed-done increments. A clean checkout is NOT required. First inspect `git status --short` and the diff: changes related to the active plan or this conversation are valid working state — continue from them. Preserve unrelated changes byte-for-byte and keep new work away from them; don't stop merely because the tree is dirty. Stop and ask ONLY if unrelated changes overlap the requested work enough that continuing risks overwriting or misattributing them.
 
 **Orchestration — agents are isolated leaf workers; you (the skill context) coordinate. The implementer and critic never share context; their shared artifact is the working tree, and findings you relay are the intentional handoff.**
 

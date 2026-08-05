@@ -7,7 +7,7 @@ description: End-to-end feature — detect or create worktree(s), one canonical 
 
 Take a feature from a plan to reviewed, PR-ready (but UNCOMMITTED) worktree(s). Don't duplicate logic — **read each sibling workflow skill named below and follow it**, so later edits flow through here.
 
-**Checklist:** maintain the session to-do list across the run — resolve repos → worktree(s) → plan → increments (qwe-implement's flow adds these) → review/fix loop → report. Update after every step.
+**Checklist:** maintain the session to-do list across the run — resolve repos → worktree(s) → plan → increments (qwe-implement's flow adds these) → review/fix loop → report. Update after every step. **On resume after an interruption:** re-derive position from the checklist + plan + `git status`, redo the step that was in flight (an agent with no returned result gets spawned again), and continue — never assume an unconfirmed step finished, never redo confirmed-done ones.
 
 Interpret the invoking request: leading repo labels (the ones my setup rule defines) → scope; a feature IDENTIFIER if I give one (e.g. `xyz`) — used to FIND existing worktrees whose directory matches it (`<repo>-…-xyz`, e.g. `frontend-xyz`), and, if none exist, as the stem for new ones; a plan path or a description; remaining text = extra guidance. If I give no identifier or branch, derive it from the plan/feature (kebab-case).
 

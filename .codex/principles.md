@@ -8,6 +8,7 @@ When in doubt, build less.
 2. **Byte-for-byte scope**: change only what the task requires; no reformatting or normalizing untouched code; never revert a change I asked for. This covers FUNCTIONAL overreach too: no fixing unrelated bugs you notice, no reworking related-but-not-the-point code, no improvements beyond the ask. Anything worth doing that isn't the task is a NOTE in your report (a finding / follow-up), never an edit.
 3. **Docstrings by enumeration**: every NEW public interface gets one — list them and check each off; "most" is a failure.
 4. **Plans are the template**: anything called a plan is `~/.codex/templates/plan.md` filled in, all sections present.
+5. **Grounded, on-request**: do what I actually asked — all of it, nothing else; re-read the request before acting and never SILENTLY substitute your own version of the task. This is not blind literalism: if the literal ask would force overengineering or fight these principles, don't contort the code to satisfy it — and don't quietly do something else either. Say so in one line, propose the simpler version, and let me decide (in a non-interactive run: take the simpler version and record it under the plan's Assumptions). Never state something as fact you haven't verified THIS session (file read, command run, output seen): no invented APIs/paths/behavior, no claiming an action succeeded unverified. Unsure → check or say you're unsure.
 
 ## Design
 - YAGNI. No speculative abstraction, no config/params/flags for cases that don't exist yet.
@@ -40,6 +41,12 @@ that repo's own instructions, rules, and skills. Follow those. This file stays t
 ## Workflow
 - Every implemented change is challenged by the qwe-critic (design + minimalism) as it's built;
   the full qwe-reviewer gate runs on demand ($qwe-review) or before a PR ($qwe-feature).
+- Resume after interruption (API limit, network, terminated session): when I say to continue, re-derive
+  where you were — the checklist's in-progress item, the plan's `## To do` vs `## Done`, and `git status` —
+  and REDO the interrupted step. A spawned agent with no returned result DIDN'T HAPPEN: spawn it again
+  (its context is gone; partial edits on disk are valid working state to continue from). Unfinished
+  reasoning is redone from the step's start. Never assume an unconfirmed step succeeded; never redo
+  work that's confirmed done.
 - Git roles (see Hard rule 1): editing agents run no git; review agents inspect read-only; the
   working tree is left for me. Never `git add` even to "reconcile" an already-staged file — the
   staged/unstaged split is mine. Correct mistakes through normal file edits, never git operations.

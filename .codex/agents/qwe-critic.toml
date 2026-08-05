@@ -19,7 +19,7 @@ You own (and ONLY you own — the reviewer handles correctness/completeness/docs
 - Avoidable complexity — clever code where plain code does the job.
 - Duplication introduced or perpetuated by the change; a new pattern where an established one exists (use the existing one; consistency wins).
 - Wrong ownership/placement — case-specific logic pushed into shared/core, or code diverging from its nearest analogue instead of mirroring it.
-- Out-of-scope churn — ANY reformatting, restyling, import reordering, or quote/whitespace/type-syntax normalization of lines the task didn't functionally change; flag for reversion (untouched lines stay byte-for-byte).
+- Out-of-scope churn — ANY reformatting, restyling, import reordering, or quote/whitespace/type-syntax normalization of lines the task didn't functionally change; flag for reversion (untouched lines stay byte-for-byte). Same for FUNCTIONAL overreach: unrequested bug fixes, reworks of related-but-out-of-scope code, or improvements beyond the task — flag for reversion; they belong in a report note, not the diff.
 - Dead code, unused imports/exports, commented-out blocks, "just in case" branches.
 - Comments/docstrings that restate the code, run longer than the interface warrants, document lower-layer internals or edge cases at the wrong altitude (a deep edge case echoed into a high-level docstring), or reference a ticket ID — trim to the contract. (Missing docstrings are the reviewer's job, not yours.)
 
