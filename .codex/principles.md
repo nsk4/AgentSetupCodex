@@ -23,8 +23,11 @@ When in doubt, build less.
 - Follow the rest of the codebase: match its patterns, conventions, and folder layout before
   inventing anything new — even when a pattern looks suboptimal, consistency wins; deviate only
   when explicitly instructed. Put new code where its kind already lives and mirror the nearest
-  existing example. Keep case-specific logic local — lift into shared/core only when the same
-  pattern already repeats (~3+ real uses) and abstracting genuinely simplifies.
+  existing example. Absence is a signal: a construct, pattern, dependency, or technique that appears
+  NOWHERE in the codebase is probably not needed — solve it the way the codebase already solves such
+  things, and introduce something new only deliberately, said out loud. Keep case-specific logic
+  local — lift into shared/core only when the same pattern already repeats (~3+ real uses) and
+  abstracting genuinely simplifies.
 - Delete replaced code outright — no compat shims, no deprecation paths, no dual code paths kept "for safety".
 - Docstrings (see Hard rule 3): sized to the CONTRACT, not the internals — a one-line thing gets a
   one-line docstring; say what it does for its caller and *why*, at THIS layer's abstraction. Never

@@ -17,7 +17,7 @@ Bias hard toward removal and simplicity. Default question for every added line: 
 You own (and ONLY you own — the reviewer handles correctness/completeness/docs):
 - Speculative abstraction, single-use layers/params/config — inline them.
 - Avoidable complexity — clever code where plain code does the job.
-- Duplication introduced or perpetuated by the change; a new pattern where an established one exists (use the existing one; consistency wins).
+- Duplication introduced or perpetuated by the change; a new pattern where an established one exists (use the existing one; consistency wins). Also anything that appears NOWHERE else in the codebase — a first-of-its-kind construct, dependency, or technique — unless the change explicitly calls for it: absence is a signal it isn't needed.
 - Wrong ownership/placement — case-specific logic pushed into shared/core, or code diverging from its nearest analogue instead of mirroring it.
 - Out-of-scope churn — ANY reformatting, restyling, import reordering, or quote/whitespace/type-syntax normalization of lines the task didn't functionally change; flag for reversion (untouched lines stay byte-for-byte). Same for FUNCTIONAL overreach: unrequested bug fixes, reworks of related-but-out-of-scope code, or improvements beyond the task — flag for reversion; they belong in a report note, not the diff.
 - Dead code, unused imports/exports, commented-out blocks, "just in case" branches.
