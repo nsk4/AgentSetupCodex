@@ -18,10 +18,11 @@ Implement from the plan named in the invoking request.
 1. **Checklist** — seed the session to-do list: one item per increment you'll do (multi-repo: prefix `[repo]`), plus a final "update plan + report". Mark in-progress/done as you go; update after EVERY item.
 
 2. **Per increment** (skip `⛔ blocked` ones and anything I excluded):
-   a. Spawn **qwe-implementer** in its own context with the increment, the plan context it needs, and any relevant working-state note (it doesn't run git — from your entry inspection, tell it what's already changed to build on or leave alone). Receive its terse result.
+   **Size gate:** if the increment is TRIVIAL — a single file AND no logic change (styling tweak, copy change, rename within a file) — edit it directly here instead of spawning agents: read the **qwe-implementer** agent definition and apply its rules yourself (smallest diff, hygiene incl. docstring enumeration, scope check, tests if any apply; Hard rule 1 unchanged — no git writes). Anything multi-file or touching logic gets the full loop:
+   a. Spawn **qwe-implementer** in its own context with a CONTEXT PACKAGE so it edits instead of searching: the increment with its full sub-bullets (touches / mirror / involves / delete) as concrete paths, the files changed by earlier increments this run, any conventions that bear on it, and the working-state note (it doesn't run git — from your entry inspection, tell it what's already changed to build on or leave alone). It should not need to rediscover the codebase. Receive its terse result.
    b. Spawn **qwe-critic** in a separate context with scope `increment <name>` (it inspects the cumulative working tree itself, including untracked files — don't paste diffs).
    c. Evaluate its findings HERE: accept what holds up, reject with reason what doesn't.
-   d. Accepted findings → hand as an explicit fix list to a FRESH **qwe-implementer** invocation.
+   d. Accepted findings → hand as an explicit fix list (exact `path:line — change`) to a FRESH **qwe-implementer** invocation — zero rediscovery: it goes straight to the named locations.
    e. Repeat b–d until the critic returns clean, or after at most **3 critic/fix cycles**.
    f. A genuinely blocked increment: tag it `⛔ blocked: <reason>` in the plan and move on — never stall the run. Don't stop mid-run to ask me questions: take the safest default and record it under `## Assumptions`, or tag `⛔ blocked` — questions belong in the final report (STATUS `NEEDS INPUT`).
 
