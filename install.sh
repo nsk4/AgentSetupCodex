@@ -7,5 +7,8 @@ codex_home="${CODEX_HOME:-$HOME/.codex}"
 agents_home="${AGENTS_HOME:-$HOME/.agents}"
 
 mkdir -p -- "$codex_home" "$agents_home"
+rm -rf -- \
+    "$agents_home/skills/qwe-message-commit" \
+    "$agents_home/skills/qwe-message-pr"
 cp -R -- "$script_dir/.codex/." "$codex_home/"
 cp -R -- "$script_dir/.agents/." "$agents_home/"

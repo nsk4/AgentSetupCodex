@@ -29,8 +29,8 @@ Then:
    **Every in-scope repo is implemented in THIS run — never do one repo and hand me a prompt for the other; handoff prompts are only for repos outside this run's scope.** Work dependency-first, and when an increment was `⛔ blocked` on the other side's output and that output has now landed in this run, UNBLOCK it and implement it now — only increments still blocked on something external (my input, a real outside dependency) remain tagged.
 
 5. **Review + fix loop (you own the fixes):**
-   a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes).
-   b. Evaluate the findings: accept what holds up, reject with reason.
+   a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes), giving both agents the log tag `review-p<pass#>`.
+   b. Evaluate the findings: accept what holds up, reject with reason. Then append ONE verdict line for the pass to `~/.codex/logs/qwe-findings.md`, in the verdict format of `~/.codex/templates/findings-log.md`.
    c. Accepted fixes → hand as an explicit fix list to a fresh **qwe-implementer** (its own context).
    d. Re-run the review. Stop when it returns `READY FOR PR`, or after **2 full review/fix passes** — then report what's still open.
 

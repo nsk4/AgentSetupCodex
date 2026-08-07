@@ -1,7 +1,0 @@
-interface:
-  display_name: "QWE Commit Message"
-  short_description: "Draft a commit message from staged changes"
-  default_prompt: "Use $qwe-message-commit to draft a commit message for the staged changes."
-
-policy:
-  allow_implicit_invocation: false

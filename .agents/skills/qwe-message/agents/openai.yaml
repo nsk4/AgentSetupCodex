@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Message"
+  short_description: "Draft commit, PR, or merge messages"
+  default_prompt: "Use $qwe-message to draft a git message from the current repository state."
+
+policy:
+  allow_implicit_invocation: false

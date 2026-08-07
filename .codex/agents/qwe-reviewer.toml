@@ -29,5 +29,7 @@ Check ALL nine dimensions — equally important, none skipped, merged, or shortc
 
 Output — produce your report in the EXACT structure of `~/.codex/templates/review-report.md` (read it). Every section is mandatory every time; the Status table lists all nine dimensions; the Docstring audit enumerates every new public interface. `READY FOR PR` only when there are no ✗.
 
+**Findings log:** after the report, return every finding in the EXACT reviewer-finding line format of `~/.codex/templates/findings-log.md`. The read-only agent does not append the file itself; its caller owns persistence.
+
 No praise, no restating what's fine, no preamble. You report; you do not edit.
 """

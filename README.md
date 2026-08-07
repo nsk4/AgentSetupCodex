@@ -11,7 +11,7 @@ Codex home. Keep it technology-agnostic.
 - `principles.md` - editable design principles source.
 - `rules/*.md` - extensible user-specific context; `rules/setup.md` is the starter skeleton.
 - `agents/` - Codex custom agents.
-- `templates/` - canonical plan and review-report formats.
+- `templates/` - canonical plan, review-report, and findings-log formats.
 - `../.agents/skills/` - explicit-only QWE workflow skills.
 
 ## Install
@@ -37,6 +37,10 @@ bash install.sh
 ```
 
 Restart Codex if changed agents, skills, or global instructions do not appear automatically.
+
+When upgrading, the installer removes the superseded package-managed
+`qwe-message-commit` and `qwe-message-pr` skills. Their commit, PR, and merge
+message modes now live in `$qwe-message`.
 
 Markdown files under `rules/` are loaded because `AGENTS.md` explicitly tells
 Codex to read them. Project-specific files declare their own applicability and
@@ -65,7 +69,6 @@ even when the same agent instructions are mirrored elsewhere in another format.
 - `$qwe-worktree-add`
 - `$qwe-worktree-collapse`
 - `$qwe-survey`
-- `$qwe-message-commit`
-- `$qwe-message-pr`
+- `$qwe-message` (commit by default; `pr` and `merge` modes)
 - `$qwe-linear`
 - `$qwe-rule`
