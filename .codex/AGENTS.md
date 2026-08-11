@@ -1,9 +1,23 @@
-<!-- User-level base. Repo AGENTS.md, skills, and rules load after this and win on any conflict. -->
-# Global instructions
+<!-- Reusable base. More specific AGENTS.md files, skills, and rules win on conflict. -->
+# QWE instructions
 
-Read `~/.codex/principles.md` before writing or reviewing code.
-Read every Markdown file under `~/.codex/rules/`. These files contain user-specific repository, environment, and workflow context.
-When a rule file declares that it applies only to particular repository or worktree paths, ignore that file unless the current path matches.
+Resolve the QWE layout before every QWE workflow and before writing or reviewing code:
+
+1. Use the exact QWE coordinator layout declared by an applicable `AGENTS.md`.
+2. Otherwise use the current repository root's `.codex/qwe-layout.toml` when present.
+3. Otherwise use `qwe-layout.toml` from Codex home (`$CODEX_HOME` when set,
+   otherwise `~/.codex`).
+4. If none exists, stop with a clear configuration error. Do not scan other
+   workspace folders or guess among repositories.
+
+The selected file must set `mode` to `product`, `project`, or `machine`, and
+must define nonempty relative `plans`, `rules`, `logs`, and `templates` paths.
+Reject an invalid mode, missing key, empty value, or absolute configured path.
+
+Resolve every configured path relative to the directory containing the selected
+`qwe-layout.toml`. Read `principles.md` beside that file and every Markdown file
+under its configured `rules` directory. Ignore a rule whose stated scope does
+not match the current repository or worktree.
 
 ## Response style
 - Be concise and direct. Lead with the answer, result, or recommendation. Default to SHORT — a few lines; length must be earned by the content, never by narration.
@@ -14,4 +28,4 @@ When a rule file declares that it applies only to particular repository or workt
 - Answer exactly what I asked. If you think I should want something else, say so in one line — don't answer the different question instead.
 
 ## Precedence
-principles.md is the baseline. Where a repo's skills, rules, or conventions say otherwise, follow the repo.
+The selected `principles.md` is the baseline. Where a repo's instructions, skills, rules, or conventions say otherwise, follow the repo.

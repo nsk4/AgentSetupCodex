@@ -29,7 +29,7 @@ Output: a numbered table, worst first, so items are referenceable:
 |---|:---:|----------|---------|-----|
 | 1 | high/med/low | path:line | what's wrong | exact change |
 
-**Findings log:** after the table, return every finding in the EXACT critic-finding line format of `~/.codex/templates/findings-log.md`. The read-only agent does not append the file itself; its caller owns persistence.
+**Findings log:** after the table, return every finding in the EXACT critic-finding line format of the findings-log template path supplied by the caller from the resolved QWE layout. If the caller did not supply the path or you cannot read it, say so. The read-only agent does not append the file itself; its caller owns persistence.
 
 Be concrete — name lines to delete or give the exact replacement. After the table add one line — `Out of scope: <item; item; …>` or `Out of scope: none` — recapping out-of-scope findings and any BUGS you noticed outside the task, so they can be triaged separately (they are notes, never fixes). No praise, no preamble. If the scope is already minimal and clean, say so in one line instead of a table.
 """

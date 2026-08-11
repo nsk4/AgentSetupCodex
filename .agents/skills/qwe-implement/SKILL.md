@@ -7,6 +7,8 @@ description: Implement a plan — per increment, an isolated qwe-implementer the
 
 Implement from the plan named in the invoking request.
 
+**Layout — resolve it once using the applicable `AGENTS.md` contract.** Reuse an exact layout supplied by an orchestrating QWE skill. Use its resolved `plans`, `logs`, and `templates` paths and pass the exact template path each agent consumes. An explicit plan path is authoritative; resolve a plan name under `<plans>` and stop if it matches zero or several files.
+
 **Repo scope** — follow the plan's scope. Single-repo plan (`## Repos` is `None`) → the current repo. Multi-repo plan (`## Repos` + `[repo]`-tagged increments) → implement each increment in its OWNING repo; cross-repo is fine when the plan spans repos and both are open. To restrict, the invoking request names the repo (e.g. `<repo> only`). Don't touch folders outside the plan's repos.
 
 **Mode** — default: ALL remaining unchecked increments this run. `step` (or `one`/`next`) in the invoking request: only the next one.
@@ -20,8 +22,8 @@ Implement from the plan named in the invoking request.
 2. **Per increment** (skip `⛔ blocked` ones and anything I excluded):
    **Size gate:** if the increment is TRIVIAL — a single file AND no logic change (styling tweak, copy change, rename within a file) — edit it directly here instead of spawning agents: read the **qwe-implementer** agent definition and apply its rules yourself (smallest diff, hygiene incl. docstring enumeration, scope check, tests if any apply; Hard rule 1 unchanged — no git writes). Anything multi-file or touching logic gets the full loop:
    a. Spawn **qwe-implementer** in its own context with a CONTEXT PACKAGE so it edits instead of searching: the increment with its full sub-bullets (touches / mirror / involves / delete) as concrete paths, the files changed by earlier increments this run, any conventions that bear on it, and the working-state note (it doesn't run git — from your entry inspection, tell it what's already changed to build on or leave alone). It should not need to rediscover the codebase. Receive its terse result.
-   b. Spawn **qwe-critic** in a separate context with scope `increment <name>` and a log tag `<increment-slug>-p<pass#>` (it inspects the cumulative working tree itself, including untracked files — don't paste diffs).
-   c. Append the critic's returned finding-log lines to `~/.codex/logs/qwe-findings.md`, then evaluate its findings HERE: accept what holds up, reject with reason what doesn't. Append ONE verdict line for the pass in the verdict format of `~/.codex/templates/findings-log.md`.
+   b. Spawn **qwe-critic** in a separate context with scope `increment <name>`, log tag `<increment-slug>-p<pass#>`, and the exact `<templates>/findings-log.md` path (it inspects the cumulative working tree itself, including untracked files — don't paste diffs).
+   c. Append the critic's returned finding-log lines to `<logs>/qwe-findings.md`, then evaluate its findings HERE: accept what holds up, reject with reason what doesn't — reject anything that would merely reverse a deliberate simplification or undo a requested change. Append ONE verdict line for the pass in the template's verdict format. If the critic and reviewer conflict, STOP and flag it rather than ping-ponging fixes.
    d. Accepted findings → hand as an explicit fix list (exact `path:line — change`) to a FRESH **qwe-implementer** invocation — zero rediscovery: it goes straight to the named locations.
    e. Repeat b–d until the critic returns clean, or after at most **3 critic/fix cycles**.
    f. A genuinely blocked increment: tag it `⛔ blocked: <reason>` in the plan and move on — never stall the run. Don't stop mid-run to ask me questions: take the safest default and record it under `## Assumptions`, or tag `⛔ blocked` — questions belong in the final report (STATUS `NEEDS INPUT`).

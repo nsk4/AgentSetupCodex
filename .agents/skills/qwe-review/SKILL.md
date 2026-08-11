@@ -7,14 +7,16 @@ description: Review changes — quick triage, full review of uncommitted changes
 
 Review my code — change no project files and apply no fixes. The append-only findings log is the sole write. Applying fixes is coordinated by `$qwe-feature` (after its review step) or by me directly. Pick the mode from the invoking request:
 
+For the full gate, resolve the QWE layout once using the applicable `AGENTS.md` contract. Reuse an exact layout supplied by an orchestrating QWE skill. Use its resolved `logs` and `templates` paths.
+
 **`short`** — quick, cheap triage, NO agents: check `git status --short` (including untracked files) and the uncommitted diff yourself for high-value issues only — obvious bugs, out-of-scope churn, missing docstrings on new public interfaces. Output the same numbered table as the critic (`# | Sev | Location | Problem | Fix`), worst first, or one line if clean. Say this is NOT the pre-PR gate; point me at `$qwe-review branch`.
 
 **`branch [base]`** — full pre-PR review of the whole branch. Base = the one named in the invoking request, else the repo's default branch (`git rev-parse --abbrev-ref origin/HEAD`, fallback `main`/`master`). Run the full gate with scope **`branch <base>`**.
 
 **no mode (default)** — full review of current uncommitted work. Run the full gate with scope **`uncommitted`**.
 
-**Full gate** — pass the SCOPE (not a pasted diff) and the caller-supplied log tag (or `-` when none) to each agent; they run the git inspection themselves, including `git status --short` and untracked files:
-1. **qwe-critic** agent — design/minimalism/duplication/placement/churn, at the named scope.
-2. **qwe-reviewer** agent — the full nine-dimension gate at the named scope, ending in a READY / NOT READY verdict.
-3. Append both agents' returned finding-log lines to `~/.codex/logs/qwe-findings.md` in the exact format of `~/.codex/templates/findings-log.md`. Create the log directory and file if needed; append only, and write nothing when there are no findings.
+**Full gate** — pass the SCOPE (not a pasted diff), caller-supplied log tag (or `-` when none), and exact resolved template paths to each agent; they run the git inspection themselves, including `git status --short` and untracked files:
+1. **qwe-critic** agent — design/minimalism/duplication/placement/churn, with `<templates>/findings-log.md`.
+2. **qwe-reviewer** agent — the full nine-dimension gate, with `<templates>/review-report.md` and `<templates>/findings-log.md`, ending in a READY / NOT READY verdict.
+3. Append both agents' returned finding-log lines to `<logs>/qwe-findings.md` in the exact template format. Create the configured log directory and file if needed; append only, and write nothing when there are no findings.
 Show both outputs exactly as returned, under clear headings, verdict at the top.

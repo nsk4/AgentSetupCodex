@@ -1,4 +1,4 @@
-<!-- Findings log contract. Single source of truth for ~/.codex/logs/qwe-findings.md — edit here, not in the agents/skills. Append-only; never delete entries. -->
+<!-- Findings log contract. Single source of truth for <resolved logs>/qwe-findings.md — edit here, not in the agents/skills. Append-only; never delete entries. -->
 
 One line per entry, pipe-separated. Three line shapes:
 

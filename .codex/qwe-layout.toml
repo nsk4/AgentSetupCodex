@@ -1,0 +1,5 @@
+mode = "machine"
+plans = "plans"
+rules = "rules"
+logs = "logs"
+templates = "templates"

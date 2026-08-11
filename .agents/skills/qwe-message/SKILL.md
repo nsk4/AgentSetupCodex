@@ -7,6 +7,8 @@ description: Generate git messages, text-only — commit message (default), PR d
 
 Produce the requested message(s) as text to copy — read-only git, output in code block(s), never run any git write command.
 
+Resolve repository labels from the applicable setup rule. When plan context is needed for ticket references, use `plans` from the QWE layout selected by the applicable `AGENTS.md` contract. If the needed mapping or layout is unavailable or ambiguous, ask rather than guessing.
+
 **Mode from the invoking request:**
 - *(bare)* → COMMIT message for the current repo.
 - `<repo-labels…>` → COMMIT message PER named repo (labels from my setup, resolved to reachable roots — don't guess; each repo inspected independently, one labeled code block each).

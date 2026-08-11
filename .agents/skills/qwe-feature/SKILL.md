@@ -7,6 +7,8 @@ description: End-to-end feature — detect or create worktree(s), one canonical 
 
 Take a feature from a plan to reviewed, PR-ready (but UNCOMMITTED) worktree(s). Don't duplicate logic — **read each sibling workflow skill named below and follow it**, so later edits flow through here.
 
+**Layout — resolve it once for the whole feature using the applicable `AGENTS.md` contract.** Use its resolved `plans`, `logs`, and `templates` paths. Keep the selected layout when work moves into another repo or worktree, and pass the exact paths each invoked skill or agent consumes.
+
 **Checklist:** maintain the session to-do list across the run — resolve repos → worktree(s) → plan → increments (qwe-implement's flow adds these) → review/fix loop → report. Update after every step. **On resume after an interruption:** re-derive position from the checklist + plan + `git status`, redo the step that was in flight (an agent with no returned result gets spawned again), and continue — never assume an unconfirmed step finished, never redo confirmed-done ones.
 
 Interpret the invoking request: leading repo labels (the ones my setup rule defines) → scope; a feature IDENTIFIER if I give one (e.g. `xyz`) — used to FIND existing worktrees whose directory matches it (`<repo>-…-xyz`, e.g. `frontend-xyz`), and, if none exist, as the stem for new ones; a plan path or a description; remaining text = extra guidance. If I give no identifier or branch, derive it from the plan/feature (kebab-case).
@@ -30,7 +32,7 @@ Then:
 
 5. **Review + fix loop (you own the fixes):**
    a. Read and follow `../qwe-review/SKILL.md` in FULL mode with scope `branch <base>` (covers committed history if the branch has any, plus all working-tree and untracked changes), giving both agents the log tag `review-p<pass#>`.
-   b. Evaluate the findings: accept what holds up, reject with reason. Then append ONE verdict line for the pass to `~/.codex/logs/qwe-findings.md`, in the verdict format of `~/.codex/templates/findings-log.md`.
+   b. Evaluate the findings: accept what holds up, reject with reason — reject anything that would merely reverse a deliberate simplification or undo a requested change. Then append ONE verdict line for the pass to `<logs>/qwe-findings.md`, in the verdict format of `<templates>/findings-log.md`. If the critic and reviewer conflict, STOP and flag it rather than ping-ponging fixes.
    c. Accepted fixes → hand as an explicit fix list to a fresh **qwe-implementer** (its own context).
    d. Re-run the review. Stop when it returns `READY FOR PR`, or after **2 full review/fix passes** — then report what's still open.
 
