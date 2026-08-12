@@ -171,6 +171,11 @@ to nested skills and isolated agents. Moving implementation into a sibling repo
 or worktree therefore does not change where the feature's plans, rules, logs,
 or templates live.
 
+`qwe-critic` and `qwe-reviewer` remain optional outside explicitly invoked QWE
+workflows. Whenever Codex chooses to use either agent, its caller persists the
+returned finding-log lines once in the configured `logs/qwe-findings.md`; the
+read-only review agent never writes the file itself.
+
 ## Machine Install
 
 Clone the repository and run:

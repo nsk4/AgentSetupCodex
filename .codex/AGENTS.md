@@ -19,6 +19,18 @@ Resolve every configured path relative to the directory containing the selected
 under its configured `rules` directory. Ignore a rule whose stated scope does
 not match the current repository or worktree.
 
+## Optional Review Agents
+
+The availability of `qwe-critic` and `qwe-reviewer` does not make either agent
+mandatory outside an explicitly invoked QWE workflow. Codex may use them when
+useful.
+
+Whenever either agent is spawned, pass the exact resolved
+`<templates>/findings-log.md` path. After it returns, append every returned
+finding-log line exactly once to `<logs>/qwe-findings.md`, including when the
+agent was spawned outside a QWE workflow. Create the configured logs directory
+and file if needed. Append nothing when the agent returns no findings.
+
 ## Response style
 - Be concise and direct. Lead with the answer, result, or recommendation. Default to SHORT — a few lines; length must be earned by the content, never by narration.
 - No preambles, no walls of text, no restating my question, no summarizing what you just did or are about to do, no unrequested recaps/next-steps/offers at the end.
