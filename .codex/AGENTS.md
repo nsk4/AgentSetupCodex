@@ -4,10 +4,12 @@
 Resolve the QWE layout before every QWE workflow and before writing or reviewing code:
 
 1. Use the exact QWE coordinator layout declared by an applicable `AGENTS.md`.
-2. Otherwise use the current repository root's `.codex/qwe-layout.toml` when present.
-3. Otherwise use `qwe-layout.toml` from Codex home (`$CODEX_HOME` when set,
+2. Otherwise use the current repository root's `qwe-layout.toml` when present.
+3. Otherwise use the current repository root's `.codex/qwe-layout.toml` when
+   present.
+4. Otherwise use `qwe-layout.toml` from Codex home (`$CODEX_HOME` when set,
    otherwise `~/.codex`).
-4. If none exists, stop with a clear configuration error. Do not scan other
+5. If none exists, stop with a clear configuration error. Do not scan other
    workspace folders or guess among repositories.
 
 The selected file must set `mode` to `product`, `project`, or `machine`, and
@@ -15,9 +17,10 @@ must define nonempty relative `plans`, `rules`, `logs`, and `templates` paths.
 Reject an invalid mode, missing key, empty value, or absolute configured path.
 
 Resolve every configured path relative to the directory containing the selected
-`qwe-layout.toml`. Read `principles.md` beside that file and every Markdown file
-under its configured `rules` directory. Ignore a rule whose stated scope does
-not match the current repository or worktree.
+`qwe-layout.toml`. Read `.codex/principles.md` below that directory when present;
+otherwise read `principles.md` beside the selected layout. Read every Markdown
+file under the configured `rules` directory. Ignore a rule whose stated scope
+does not match the current repository or worktree.
 
 ## Optional Review Agents
 

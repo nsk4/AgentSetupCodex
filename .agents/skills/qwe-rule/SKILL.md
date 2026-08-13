@@ -7,7 +7,7 @@ description: Capture a correction or preference as a persistent QWE rule. Routes
 
 Turn the invoking request into a persistent rule.
 
-**Layout — resolve it once using the applicable `AGENTS.md` contract.** Use its resolved `rules` path; the selected principles file is `principles.md` beside `qwe-layout.toml`.
+**Layout — resolve it once using the applicable `AGENTS.md` contract.** Use its resolved `rules` path. For a repository-root layout, use `.codex/principles.md` below the layout directory; otherwise use `principles.md` beside `qwe-layout.toml`.
 
 1. **Generalization gate** — is this a recurring, generalizable preference, or a one-off fix tied to this situation? A one-off does NOT become a rule: say so and stop. If it is really a plan item, point me at `$qwe-plan`.
 

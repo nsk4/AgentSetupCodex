@@ -7,10 +7,11 @@ project repository, or the whole machine. Agent and skill behavior stays
 generic; the installation layout controls where plans, rules, logs, and
 templates live.
 
-The checked-in `qwe-layout.toml` is the machine-mode default used by
+The checked-in `.codex/qwe-layout.toml` is the machine-mode default used by
 `install.sh`. For a product or project installation, copy the payload locally,
-set the mode and paths shown below, and merge the reusable `.codex/AGENTS.md`
-guidance into the installation root's `AGENTS.md`.
+create `qwe-layout.toml` at the repository root with the mode and paths shown
+below, and have the root `AGENTS.md` load the reusable `.codex/AGENTS.md`
+guidance.
 
 ## Payload Layout
 
@@ -35,8 +36,8 @@ implementation repositories.
 ```text
 ProductRepo/
 |-- AGENTS.md
+|-- qwe-layout.toml
 |-- .codex/
-|   |-- qwe-layout.toml
 |   |-- principles.md
 |   |-- agents/
 |   `-- templates/
@@ -48,24 +49,32 @@ ProductRepo/
 ```
 
 The product repository is the Codex project root. Add implementation
-repositories as additional workspace folders. Its root `AGENTS.md` is the
-canonical project manifest and declares repository ownership boundaries.
+repositories as additional workspace folders. Keep its root `AGENTS.md` as a
+small bootstrap to `.codex/AGENTS.md`; keep concrete repository ownership and
+path mappings in the configured `rules/setup.md`.
+
+```md
+# Project Instructions
+
+Read `.codex/AGENTS.md` for shared workflow instructions.
+```
 
 Use this layout:
 
 ```toml
 mode = "product"
-plans = "../plans"
-rules = "../rules"
-logs = "../logs"
-templates = "templates"
+plans = "plans"
+rules = "rules"
+logs = "logs"
+templates = ".codex/templates"
 ```
 
-Paths are relative to `ProductRepo/.codex/`, so plans, rules, and logs remain
-visible, Git-tracked product-workspace artifacts. A sibling code repository may
-contain a small root `AGENTS.md` that declares the exact product
-`ProductRepo/.codex/qwe-layout.toml` and points agents back to the product
-repository manifest when that code repository is opened independently.
+Paths are relative to `ProductRepo/`, where the selected layout lives. Plans,
+rules, and logs therefore remain visible, Git-tracked product-workspace
+artifacts while reusable templates remain under `.codex/`. A sibling code
+repository may contain a small root `AGENTS.md` that declares the exact product
+`ProductRepo/qwe-layout.toml` and points agents back to the product repository
+bootstrap when that code repository is opened independently.
 
 Copy the portable `.codex/rules/setup.md` skeleton to
 `ProductRepo/rules/setup.md` and fill in this project's repository labels. The
@@ -80,8 +89,8 @@ there is no separate product repository.
 ```text
 ProjectRepo/
 |-- AGENTS.md
+|-- qwe-layout.toml
 |-- .codex/
-|   |-- qwe-layout.toml
 |   |-- principles.md
 |   |-- agents/
 |   |-- templates/
@@ -96,14 +105,17 @@ Use this layout:
 
 ```toml
 mode = "project"
-plans = "plans"
-rules = "rules"
-logs = "logs"
-templates = "templates"
+plans = ".codex/plans"
+rules = ".codex/rules"
+logs = ".codex/logs"
+templates = ".codex/templates"
 ```
 
-All workflow configuration and state remains inside the repository's hidden
-`.codex/` and `.agents/` directories.
+The root layout selects this installation over machine configuration. All
+workflow configuration and state other than that selector remains inside the
+repository's hidden `.codex/` and `.agents/` directories.
+
+Use the same minimal root `AGENTS.md` bootstrap shown for product mode.
 
 The copied `.codex/rules/setup.md` is already in the configured rules
 directory. Fill in the repository labels that this installation needs.
@@ -149,19 +161,24 @@ product, project, or home-directory paths.
 Resolution order:
 
 1. The exact QWE coordinator layout declared by an applicable `AGENTS.md`.
-2. The current repository root's `.codex/qwe-layout.toml`.
-3. `qwe-layout.toml` in `$CODEX_HOME`, or `~/.codex` when `CODEX_HOME` is unset.
-4. Stop with a clear configuration error when none exists.
+2. The current repository root's `qwe-layout.toml`.
+3. The current repository root's `.codex/qwe-layout.toml`.
+4. `qwe-layout.toml` in `$CODEX_HOME`, or `~/.codex` when `CODEX_HOME` is unset.
+5. Stop with a clear configuration error when none exists.
 
 Do not scan unrelated workspace folders. A product workspace's root
 `AGENTS.md`, and any sibling-repo bootstrap used when that repo is opened
 independently, must identify the product coordinator explicitly.
 
-Every configured path is relative to the `.codex/` directory containing the
-selected `qwe-layout.toml`. Repository configuration therefore overrides a
-machine installation. `$qwe-plan`, `$qwe-rule`, and findings logging must write
-only to the resolved locations and must not guess or silently fall back to a
-different directory.
+Every configured path is relative to the directory containing the selected
+`qwe-layout.toml`. A root layout therefore overrides both the legacy
+repository-local `.codex/qwe-layout.toml` fallback and a machine installation.
+`$qwe-plan`, `$qwe-rule`, and findings logging must write only to the resolved
+locations and must not guess or silently fall back to a different directory.
+
+For repository-root layouts, reusable principles live at
+`.codex/principles.md` below the layout directory. For `.codex` and machine
+layouts, `principles.md` lives beside the layout file.
 
 `mode` must be `product`, `project`, or `machine`. The `plans`, `rules`, `logs`,
 and `templates` values are required, nonempty relative paths.
