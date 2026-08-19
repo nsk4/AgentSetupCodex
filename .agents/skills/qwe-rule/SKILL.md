@@ -1,23 +1,21 @@
 ---
 name: qwe-rule
-description: Capture a correction or preference as a persistent QWE rule. Routes project conventions to the configured rules directory and installation-wide preferences to the selected principles file; distills, deduplicates, and shows the result. Invoke explicitly with `$qwe-rule`; do not use implicitly.
+description: Capture a correction or preference as a persistent rule, in the right place — the project's rules folder for project conventions, principles.md for cross-project preferences. Distills to a terse rule with rationale; dedupes; shows the result.
 ---
 
 # QWE Rule
 
-Turn the invoking request into a persistent rule.
+Turn this into a persistent rule: the invoking request
 
-**Layout — resolve it once using the applicable `AGENTS.md` contract.** Use its resolved `rules` path. For a repository-root layout, use `.codex/principles.md` below the layout directory; otherwise use `principles.md` beside `qwe-layout.toml`.
+1. **Generalization gate** — is this a recurring, generalizable preference, or a one-off fix tied to this situation? A one-off does NOT become a rule: say so and stop. (If it's really a plan item, point me at `$qwe-plan`.)
 
-1. **Generalization gate** — is this a recurring, generalizable preference, or a one-off fix tied to this situation? A one-off does NOT become a rule: say so and stop. If it is really a plan item, point me at `$qwe-plan`.
-
-2. **Route it through the selected layout:**
-   - **Project-specific convention** (naming, structure, how code is written in this project) → `<rules>/<topic>.md`. In `machine` mode, start the file with a plain applicability statement naming the repository or worktree path pattern and saying to ignore the file when it does not match. Make generic repo names specific enough that they cannot match unrelated projects. In `product` or `project` mode, the installation already scopes the rule; add narrower applicability only when needed.
-   - **Installation-wide personal preference** (how I work, style, workflow) → the fitting section of the selected `principles.md`. Keep its existing structure; do not add a section for one rule.
+2. **Route it — never written into an implementation/code repository** (committed code-repo config is a separate, deliberate act — I do that myself via the repo's skills). Product-specific rules intentionally live in the PRODUCT repository's configured rules directory:
+   - **Project-specific convention** (naming, structure, how code is written in THAT product) → the product's `<rules>` folder per the layout resolution. Write `<topic>.md` there, then ensure the product root `AGENTS.md` bootstrap loads `.codex/AGENTS.md`; that shared guidance reads every Markdown file in `<rules>`, so no static rules index is needed. No `paths:` frontmatter is needed; the product root is the scope. Report any layout mismatch you notice.
+   - **Cross-project personal preference** (how I work, style, workflow) → a bullet in the fitting section of the installation's `principles.md` (resolved like other framework assets: product `.codex/` first, else Codex home (`$CODEX_HOME` or `~/.codex`)). Same bar as what's already there: one distilled bullet, no near-duplicates (merge instead), never a new section for one rule.
    - Ambiguous → ask me, one line.
 
-3. **Distill** — write it as ONE terse rule: prefer guidance with the rationale ("prefer X because Y") over absolutes, unless it is genuinely a hard rule. Keep the scope honest — do not over-generalize a narrow preference into a blanket law, and do not invent detail I did not give.
+3. **Distill** — write it as ONE terse rule: prefer guidance with the rationale ("prefer X because Y") over absolutes, unless it's genuinely a hard rule. Keep the scope honest — don't over-generalize a narrow preference into a blanket law, and don't invent detail I didn't give.
 
-4. **Dedup** — read the target file first: if an existing rule already covers or contradicts this, merge or update it instead of appending a near-duplicate; flag a contradiction to me instead of silently overriding.
+4. **Dedup** — read the target file first: if an existing rule already covers or contradicts this, MERGE or update it instead of appending a near-duplicate; flag a contradiction to me instead of silently overriding.
 
 5. Show me the final rule text and where it now lives. Nothing else changes — no code edits.

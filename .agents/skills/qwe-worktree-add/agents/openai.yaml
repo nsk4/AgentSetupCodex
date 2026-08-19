@@ -1,7 +1,0 @@
-interface:
-  display_name: "QWE Worktree Add"
-  short_description: "Create or reuse a Git worktree"
-  default_prompt: "Use $qwe-worktree-add to create or reuse a worktree for this branch."
-
-policy:
-  allow_implicit_invocation: false

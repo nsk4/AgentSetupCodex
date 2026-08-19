@@ -4,10 +4,10 @@ Minimalist by default. The smallest correct change wins. Throwing code away is p
 When in doubt, build less.
 
 ## Hard rules — never break these
-1. **No git writes**: never stage (`git add`), commit, or push; never `reset`/`restore`/`checkout --`/`clean`/`stash`/`revert`; no checkpoint commits. Staging and committing are only ever mine. (Editing agents run no git at all.)
+1. **No git writes**: never stage (`git add`), commit, or push; never `reset`/`restore`/`checkout --`/`clean`/`stash`/`revert`; no checkpoint commits. Staging and committing are only ever mine. (Editing agents run no git at all.) The ONLY exceptions are skills whose stated purpose IS a specific git write and that I directly invoked — each names its narrow exception itself (e.g. opening a PR pushes its source branch; collapsing a worktree uses one transient transport commit that must be undone). Never as a side effect of anything else.
 2. **Byte-for-byte scope**: change only what the task requires; no reformatting or normalizing untouched code; never revert a change I asked for. This covers FUNCTIONAL overreach too: no fixing unrelated bugs you notice, no reworking related-but-not-the-point code, no improvements beyond the ask. Anything worth doing that isn't the task is a NOTE in your report (a finding / follow-up), never an edit. If an AD-HOC (non-plan) ask balloons beyond its implied size — a "small tweak" turning multi-file — confirm with me before proceeding; plan-driven work instead follows the plan's declared touches.
 3. **Docstrings by enumeration**: every NEW public interface gets one — list them and check each off; "most" is a failure.
-4. **Plans are the template**: anything called a plan uses the plan template selected by the QWE layout, filled in with all sections present.
+4. **Plans are the template**: anything called a plan is `<templates>/plan.md` filled in, all sections present.
 5. **Grounded, on-request**: do what I actually asked — all of it, nothing else; re-read the request before acting and never SILENTLY substitute your own version of the task. This is not blind literalism: if the literal ask would force overengineering or fight these principles, don't contort the code to satisfy it — and don't quietly do something else either. Say so in one line, propose the simpler version, and let me decide (in a non-interactive run: take the simpler version and record it under the plan's Assumptions). Never state something as fact you haven't verified THIS session (file read, command run, output seen): no invented APIs/paths/behavior, no claiming an action succeeded unverified. Unsure → check or say you're unsure.
 
 ## Design
@@ -36,12 +36,12 @@ When in doubt, build less.
 - Memory writes are EXPLICIT-ONLY: never save anything to memory (auto-memory or any other persistent store) on your own initiative — only when I explicitly ask you to remember something. Durable decisions live in the repo — code, docstrings, READMEs, rules, skills — never only in assistant memory; treat memory as disposable local hints, the repo is the source of truth.
 - New behavior gets a test; don't test framework internals.
 
-## Stack conventions live in the project
-Language-, framework-, and project-specific rules — how code is structured, styled, and organized —
-and project-phase policies (e.g. whether breaking changes are acceptable) are defined per project, in
-that repo's own instructions, rules, and skills. Follow those. This file stays tech- and tool-agnostic.
-
 ## Workflow
+- Spawn a subagent only when isolation PAYS: large exploratory reads, repeated passes, protecting a
+  long-running orchestration's context, or fresh judgment on this session's OWN output (self-review is
+  biased). Never spawn for output cleanliness (that isn't real) or when the calling context could do the
+  work with what it already has — every spawn re-pays context discovery. The writer and the judge of a
+  change never share a context — at least one side is always spawned.
 - Resume after interruption (API limit, network, terminated session): when I say to continue, re-derive
   where you were from durable state (task list, plan/notes on disk, `git status`) and REDO the interrupted
   step. A spawned agent with no returned result DIDN'T HAPPEN: spawn it again (its context is gone; partial
@@ -51,4 +51,4 @@ that repo's own instructions, rules, and skills. Follow those. This file stays t
   working tree is left for me. Never `git add` even to "reconcile" an already-staged file — the
   staged/unstaged split is mine. Correct mistakes through normal file edits, never git operations.
 - A handoff prompt for a repo/agent OUTSIDE the current run's scope goes in chat as a Markdown block — never written into a plan, doc, or code file. Never hand off work for a repo that IS in scope — implement it.
-- Any plan you write follows the plan template selected by the QWE layout, whatever its source (feature request, ticket, or review findings) — fill the template, don't freeform.
+- Any plan you write follows `<templates>/plan.md`, whatever its source (feature request, ticket, or review findings) — fill the template, don't freeform.

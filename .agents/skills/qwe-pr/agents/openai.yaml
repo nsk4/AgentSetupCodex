@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE PR"
+  short_description: "Push a branch and open a pull request"
+  default_prompt: "Use $qwe-pr to push the source branch and open a pull request."
+
+policy:
+  allow_implicit_invocation: false

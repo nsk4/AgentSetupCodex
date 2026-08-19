@@ -1,260 +1,158 @@
 # Agent Setup Codex
 
-Project-neutral Codex setup for the QWE agent workflow.
+Codex port of the QWE workflow. The provider-neutral workflow text stays aligned with the canonical
+Claude package; only file locations, invocation syntax, discovery, hooks, and agent metadata differ.
 
-The same workflow payload can be installed for a product workspace, a single
-project repository, or the whole machine. Agent and skill behavior stays
-generic; the installation layout controls where plans, rules, logs, and
-templates live.
+Plan → implement (implementer↔critic loop) → review gate → your commit. Agents are isolated leaf
+workers; skills orchestrate. Nothing stages, commits, or pushes except the narrow Git-write operations
+named by explicitly invoked `$qwe-pr` and `$qwe-worktree collapse`.
 
-The checked-in `.codex/qwe-layout.toml` is the machine-mode default used by
-`install.sh`. For a product or project installation, copy the payload locally,
-create `qwe-layout.toml` at the repository root with the mode and paths shown
-below, and have the root `AGENTS.md` load the reusable `.codex/AGENTS.md`
-guidance.
+## Payload
 
-## Payload Layout
+- `.codex/AGENTS.md` — reusable Codex guidance.
+- `.codex/principles.md` — generic design and workflow principles.
+- `.codex/qwe-contract.md` — canonical QWE layout and asset-resolution contract.
+- `.codex/qwe-layout.md` — machine-mode fallback.
+- `.codex/agents/` — isolated Codex custom agents.
+- `.codex/templates/` — canonical plan, review, and findings-log formats.
+- `.codex/hooks.json` and `.codex/hooks/` — best-effort SessionStart workspace context.
+- `.agents/skills/` — explicit-only QWE workflows.
 
-- `.codex/AGENTS.md` - reusable Codex guidance source.
-- `.codex/principles.md` - editable design principles source.
-- `.codex/qwe-layout.toml` - installation mode and workflow paths.
-- `.codex/agents/` - Codex custom agents.
-- `.codex/templates/` - canonical plan, review-report, and findings-log formats.
-- `.agents/skills/` - explicit-only QWE workflow skills.
+Every QWE skill sets `allow_implicit_invocation: false`. Invoke one directly with `$qwe-...`, or
+have an explicitly invoked orchestrator call its sibling workflow.
 
-Commands from the source workflow are represented as explicit-only skills.
-Every QWE skill sets `allow_implicit_invocation: false` and runs only when it is
-directly invoked or explicitly requested by an orchestrating agent.
+## Layout
 
-## Installation Modes
+Layout files are plain `key: value` Markdown. Resolution is deterministic, first hit wins:
 
-### Product Workspace
+1. `<product>/qwe-layout.md`
+2. `<product>/.codex/qwe-layout.md`
+3. `$CODEX_HOME/qwe-layout.md`, or `~/.codex/qwe-layout.md`
+4. Built-in machine defaults
 
-Use this mode when a product or PM repository coordinates one or more sibling
-implementation repositories.
+The nearest file wins even when invalid. Workflows report every mismatch, apply the contract's
+deterministic fallback for invalid values, and continue. See `.codex/qwe-contract.md` for the complete
+grammar and asset-resolution rules.
+
+`repos:` contains code repositories only. The product repository is implicit and is never listed.
+
+## Product Installation
+
+Use one product repository as the workspace root. Keep plans, rules, and logs there; keep each code
+repository underneath it as an independent, gitignored repository. Relative sibling paths also work
+when the session has access to them.
+
+Add a root `qwe-layout.md` before installing:
+
+```md
+mode: product
+repos: repo-a=repo-a, repo-b=repo-b
+plans: plans
+rules: rules
+logs: logs
+templates: .codex/templates
+```
+
+Add a minimal root `AGENTS.md`:
+
+```md
+Read `.codex/AGENTS.md` before writing or reviewing code.
+Resolve QWE paths from `./qwe-layout.md` and report every mismatch.
+```
+
+Create the declared working directories, then install the framework into the product root:
+
+```sh
+CODEX_HOME="$PWD/.codex" AGENTS_HOME="$PWD/.agents" /path/to/agent-setup-codex/install.sh
+```
+
+Codex reads every Markdown file in the resolved rules directory; no `rules/index.md` is needed.
+A typical product root is:
 
 ```text
 ProductRepo/
 |-- AGENTS.md
-|-- qwe-layout.toml
+|-- qwe-layout.md
 |-- .codex/
-|   |-- principles.md
-|   |-- agents/
-|   `-- templates/
 |-- .agents/
-|   `-- skills/
 |-- plans/
 |-- rules/
-`-- logs/
+|-- logs/
+|-- repo-a/
+`-- repo-b/
 ```
 
-The product repository is the Codex project root. Add implementation
-repositories as additional workspace folders. Keep its root `AGENTS.md` as a
-small bootstrap to `.codex/AGENTS.md`; keep concrete repository ownership and
-path mappings in the configured `rules/setup.md`.
+## Project Installation
+
+For a standalone code repository, add root `qwe-layout.md` first:
 
 ```md
-# Project Instructions
-
-Read `.codex/AGENTS.md` for shared workflow instructions.
+mode: project
+plans: .codex/plans
+rules: .codex/rules
+logs: .codex/logs
+templates: .codex/templates
 ```
 
-Use this layout:
+Use the same minimal root `AGENTS.md` bootstrap shown above. Create the declared working directories,
+then install the payload locally:
 
-```toml
-mode = "product"
-plans = "plans"
-rules = "rules"
-logs = "logs"
-templates = ".codex/templates"
+```sh
+CODEX_HOME="$PWD/.codex" AGENTS_HOME="$PWD/.agents" /path/to/agent-setup-codex/install.sh
 ```
 
-Paths are relative to `ProductRepo/`, where the selected layout lives. Plans,
-rules, and logs therefore remain visible, Git-tracked product-workspace
-artifacts while reusable templates remain under `.codex/`. A sibling code
-repository may contain a small root `AGENTS.md` that declares the exact product
-`ProductRepo/qwe-layout.toml` and points agents back to the product repository
-bootstrap when that code repository is opened independently.
+## Machine Installation
 
-Copy the portable `.codex/rules/setup.md` skeleton to
-`ProductRepo/rules/setup.md` and fill in this project's repository labels. The
-configured rules directory is canonical; the payload copy under `.codex/rules`
-is not read in product mode.
-
-### Project Repository
-
-Use this mode when the workflow is installed directly into one repository and
-there is no separate product repository.
-
-```text
-ProjectRepo/
-|-- AGENTS.md
-|-- qwe-layout.toml
-|-- .codex/
-|   |-- principles.md
-|   |-- agents/
-|   |-- templates/
-|   |-- plans/
-|   |-- rules/
-|   `-- logs/
-`-- .agents/
-    `-- skills/
-```
-
-Use this layout:
-
-```toml
-mode = "project"
-plans = ".codex/plans"
-rules = ".codex/rules"
-logs = ".codex/logs"
-templates = ".codex/templates"
-```
-
-The root layout selects this installation over machine configuration. All
-workflow configuration and state other than that selector remains inside the
-repository's hidden `.codex/` and `.agents/` directories.
-
-Use the same minimal root `AGENTS.md` bootstrap shown for product mode.
-
-The copied `.codex/rules/setup.md` is already in the configured rules
-directory. Fill in the repository labels that this installation needs.
-
-### Machine
-
-Use this mode to make the workflow available from every repository on the
-machine.
-
-```text
-~/.codex/
-|-- AGENTS.md
-|-- principles.md
-|-- qwe-layout.toml
-|-- agents/
-|-- templates/
-|-- plans/
-|-- rules/
-`-- logs/
-
-~/.agents/
-`-- skills/
-```
-
-Use this layout:
-
-```toml
-mode = "machine"
-plans = "plans"
-rules = "rules"
-logs = "logs"
-templates = "templates"
-```
-
-Machine mode deliberately uses the direct, unnamespaced
-`~/.codex/{plans,rules,logs}` locations.
-
-## Path Resolution
-
-QWE workflows resolve paths from `qwe-layout.toml`; they do not hardcode
-product, project, or home-directory paths.
-
-Resolution order:
-
-1. The exact QWE coordinator layout declared by an applicable `AGENTS.md`.
-2. The current repository root's `qwe-layout.toml`.
-3. The current repository root's `.codex/qwe-layout.toml`.
-4. `qwe-layout.toml` in `$CODEX_HOME`, or `~/.codex` when `CODEX_HOME` is unset.
-5. Stop with a clear configuration error when none exists.
-
-Do not scan unrelated workspace folders. A product workspace's root
-`AGENTS.md`, and any sibling-repo bootstrap used when that repo is opened
-independently, must identify the product coordinator explicitly.
-
-Every configured path is relative to the directory containing the selected
-`qwe-layout.toml`. A root layout therefore overrides both the legacy
-repository-local `.codex/qwe-layout.toml` fallback and a machine installation.
-`$qwe-plan`, `$qwe-rule`, and findings logging must write only to the resolved
-locations and must not guess or silently fall back to a different directory.
-
-For repository-root layouts, reusable principles live at
-`.codex/principles.md` below the layout directory. For `.codex` and machine
-layouts, `principles.md` lives beside the layout file.
-
-`mode` must be `product`, `project`, or `machine`. The `plans`, `rules`, `logs`,
-and `templates` values are required, nonempty relative paths.
-
-An orchestrating QWE skill resolves the layout once and passes the exact paths
-to nested skills and isolated agents. Moving implementation into a sibling repo
-or worktree therefore does not change where the feature's plans, rules, logs,
-or templates live.
-
-`qwe-critic` and `qwe-reviewer` remain optional outside explicitly invoked QWE
-workflows. Whenever Codex chooses to use either agent, its caller persists the
-returned finding-log lines once in the configured `logs/qwe-findings.md`; the
-read-only review agent never writes the file itself.
-
-## Machine Install
-
-Clone the repository and run:
+Run from this repository:
 
 ```sh
 ./install.sh
 ```
 
-The installer copies package-managed guidance, agents, templates, and skills
-into `${CODEX_HOME:-$HOME/.codex}` and `${AGENTS_HOME:-$HOME/.agents}`. It
-creates the default `qwe-layout.toml` and `rules/setup.md` only when they do not
-exist, preserving configured paths and repository labels across upgrades. To use
-other locations:
+This installs guidance, agents, templates, hooks, and skills into
+`${CODEX_HOME:-$HOME/.codex}` and `${AGENTS_HOME:-$HOME/.agents}`. Machine mode stores
+plans, rules, logs, and templates directly below Codex home.
 
-```sh
-CODEX_HOME=/path/to/codex-home AGENTS_HOME=/path/to/agents-home ./install.sh
-```
+The installer refreshes package-managed assets while preserving an existing `qwe-layout.md`,
+plans, rules, and logs. On the first upgrade from the older Codex port, it converts a valid
+`qwe-layout.toml` to `qwe-layout.md` and removes the obsolete TOML file. It also removes the
+superseded split message and worktree skills.
 
-In GitHub Codespaces, run this from the repository root:
+## Hooks
 
-```sh
-bash install.sh
-```
+Codex supports SessionStart hooks natively. `.codex/hooks.json` registers the QWE hook, which scans
+declared repositories for nested `AGENTS.md` files and repository-owned `.github/skills`, then reports
+their paths, skill descriptions, and live Git state as developer context. Product QWE skills remain in
+`.agents/skills` and use Codex's native discovery. The hook is best-effort and never blocks a session.
 
-Restart Codex if changed agents, skills, or instructions do not appear
-automatically.
+Codex requires trust for new or changed non-managed hooks. Review it with `/hooks` after installation.
+On Windows, `commandWindows` runs `session-start.cmd`, which resolves Git Bash explicitly instead of
+using the system `bash` alias. Git for Windows is therefore required, matching the installer.
+Codex combines matching hook layers, so enable the QWE SessionStart hook at only one active level for
+a workspace when both machine and project installations are present.
 
-When upgrading, the installer removes the superseded package-managed
-`qwe-message-commit` and `qwe-message-pr` skills. Their commit, PR, and merge
-message modes now live in `$qwe-message`.
+## Findings
 
-## Rules
+Critic and reviewer agents are read-only. They return findings to the invoking skill. That skill is the
+only writer and appends findings exactly once to `<logs>/qwe-findings.md` using
+`<templates>/findings-log.md`. No findings means no file write. Review agents are optional unless an
+explicitly invoked workflow requires them.
 
-`$qwe-rule` writes persistent rules to the rules directory selected by
-`qwe-layout.toml`. Project-specific instructions remain project-specific in
-product and project modes; machine mode stores them under `~/.codex/rules/`.
-The applicable `AGENTS.md` tells Codex to read the configured rule files.
-
-Codex executable permission rules use the separate `*.rules` format. They are
-not QWE Markdown guidance and are not routed through `$qwe-rule`.
-
-## Editing Rule
-
-Keep workflow skills close to the source commands, translating only argument
-handling, paths, invocation syntax, and provider-specific capabilities that
-Codex cannot use.
-
-`principles.md` is intended to be drop-in replaceable.
-
-Agents must be TOML in Codex, so `agents/*.toml` use Codex's required format
-even when the same agent instructions are mirrored elsewhere in another
-format.
-
-## Workflow Skills
+## Workflows
 
 - `$qwe-plan`
 - `$qwe-implement`
 - `$qwe-review`
 - `$qwe-feature`
-- `$qwe-worktree-add`
-- `$qwe-worktree-collapse`
+- `$qwe-worktree`
 - `$qwe-survey`
-- `$qwe-message` (commit by default; `pr` and `merge` modes)
+- `$qwe-message`
+- `$qwe-pr`
 - `$qwe-linear`
 - `$qwe-rule`
+
+## Editing
+
+Keep the Codex port aligned with the canonical source. Change provider-neutral behavior upstream first,
+then re-import it. Codex-only changes belong here only when they concern Codex paths, metadata,
+invocation, discovery, hooks, or capabilities.

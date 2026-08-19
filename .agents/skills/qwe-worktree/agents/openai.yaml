@@ -1,0 +1,7 @@
+interface:
+  display_name: "QWE Worktree"
+  short_description: "Add or collapse Git worktrees"
+  default_prompt: "Use $qwe-worktree to add or collapse a Git worktree."
+
+policy:
+  allow_implicit_invocation: false

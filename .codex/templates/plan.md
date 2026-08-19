@@ -3,10 +3,10 @@
 # Plan: <feature>
 
 ## Repos
-<just the repo labels, e.g. `frontend, backend` — or `None` for the current repo only. No descriptions of what goes where (the increments' `[repo]` tags carry that); add a note ONLY when it genuinely matters, e.g. `backend (~90% of the work)` or a niche caveat>
+<just the repo labels, e.g. `repo-a, repo-b` — or `None` for the current repo only. No descriptions of what goes where (the increments' `[repo]` tags carry that); add a note ONLY when it genuinely matters, e.g. `repo-a (~90% of the work)` or a niche caveat>
 
 ## Tickets
-<ticket identifiers this plan addresses (e.g. Linear `YNT-123`); write `None` if none>
+<ticket identifiers this plan addresses (e.g. Linear `ABC-123`); write `None` if none>
 
 ## Needs your input
 - <a genuinely blocking decision only the human can make — a real fork, not a defaultable detail>
