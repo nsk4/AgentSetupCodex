@@ -31,4 +31,4 @@
 ## Out of scope
 - <what is deliberately NOT being done>
 
-<!-- Tag legend: untagged = ready now · `⛔ blocked: <reason>` = can't start until something outside this step lands (input / decision / other side) · `✎ polish` = minor, non-blocking. Multi-repo: ONE canonical plan file (never per-repo copies); list the repos in `## Repos`, give every increment exactly one owning repo prefix (`- [ ] [<repo>] …`), and order increments so dependencies are explicit (`⛔ blocked:` naming what it waits on). -->
+<!-- Tag legend: untagged = ready now · `⛔ blocked: <prerequisite>` = can't start yet — INTERNAL dependency: name the exact prerequisite increment in this plan (auto-unblocks when it lands in ## Done); EXTERNAL: name the missing input/decision/outside work (only the human unblocks it) · `✎ polish` = minor, non-blocking. Multi-repo: ONE canonical plan file (never per-repo copies); list the repos in `## Repos`, give every increment exactly one owning repo prefix (`- [ ] [<repo>] …`), and order increments so dependencies are explicit (`⛔ blocked:` naming what it waits on). -->
